@@ -113,9 +113,9 @@ export function Purpose() {
         loading="lazy"
         width={1200}
         height={1504}
-        className="absolute inset-0 h-full w-full object-cover opacity-25"
+        className="absolute inset-0 h-full w-full object-cover opacity-70"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.035_285/0.94),oklch(0.16_0.035_285/0.99))]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.16_0.035_285/0.72),oklch(0.16_0.035_285/0.93))]" />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal>
           <span className="eyebrow">Our Purpose</span>
