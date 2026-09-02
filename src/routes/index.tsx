@@ -9,6 +9,7 @@ import {
   WhyAndCommitment,
   ContactFooter,
 } from "@/components/cxo/SectionsB";
+import { Conferences, Gallery, PartnerLogos, Team } from "@/components/cxo/SectionsC";
 
 const title = "CXO Media | Enterprise Technology Events for the C-Suite";
 const description =
@@ -37,9 +38,13 @@ function Index() {
       <Purpose />
       <Mission />
       <Capabilities />
+      <Conferences />
+      <Gallery />
       <Audience />
       <Sectors />
       <Partners />
+      <PartnerLogos />
+      <Team />
       <WhyAndCommitment />
       <ContactFooter />
     </main>

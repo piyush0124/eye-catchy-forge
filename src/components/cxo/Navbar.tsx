@@ -4,9 +4,12 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "#about", label: "About" },
   { href: "#capabilities", label: "Capabilities" },
+  { href: "#conferences", label: "Conferences" },
+  { href: "#glimpses", label: "Glimpses" },
   { href: "#audience", label: "Audience" },
   { href: "#sectors", label: "Sectors" },
   { href: "#partners", label: "Partners" },
+  { href: "#team", label: "Team" },
   { href: "#contact", label: "Contact" },
 ];
 
