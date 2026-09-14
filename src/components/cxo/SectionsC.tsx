@@ -105,7 +105,9 @@ export function Conferences() {
   const [showAll, setShowAll] = useState(false);
 
   const filtered = year === "All" ? past : past.filter((p) => p.year === year);
-  const visible = showAll ? filtered : filtered.slice(0, 12);
+  const featured = filtered.slice(0, 3);
+  const archive = filtered.slice(3);
+  const visibleArchive = showAll ? archive : archive.slice(0, 9);
 
   return (
     <section id="conferences" className="section-pad relative overflow-hidden">
@@ -166,14 +168,19 @@ export function Conferences() {
         </div>
 
         {/* Past editions */}
-        <Reveal className="mt-20 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <span className="eyebrow">Past Editions</span>
-            <h3 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-semibold">
-              {past.length}+ editions <span className="text-gradient">delivered</span>
-            </h3>
-          </div>
-          <div className="flex flex-wrap gap-2">
+        <div className="mt-24 border-t border-border pt-12">
+          <Reveal className="flex flex-wrap items-end justify-between gap-8">
+            <div className="max-w-xl">
+              <span className="eyebrow">Event Archive</span>
+              <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.3rem)] leading-none font-semibold">
+                Past <span className="text-gradient">editions</span>
+              </h3>
+              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
+                A growing record of conversations, connections and ideas shaping enterprise
+                technology across India.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2" aria-label="Filter past events by year">
             {years.map((y) => (
               <button
                 key={y}
@@ -181,51 +188,83 @@ export function Conferences() {
                   setYear(y);
                   setShowAll(false);
                 }}
-                className={`rounded-full border px-4 py-1.5 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors ${
+                aria-pressed={year === y}
+                className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase transition-all duration-300 ${
                   year === y
-                    ? "border-transparent bg-gradient-brand text-primary-foreground"
-                    : "border-border text-muted-foreground hover:bg-secondary"
+                    ? "border-primary bg-primary text-primary-foreground shadow-elegant"
+                    : "border-border text-muted-foreground hover:border-primary/60 hover:text-foreground"
                 }`}
               >
                 {y}
               </button>
             ))}
-          </div>
-        </Reveal>
+            </div>
+          </Reveal>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((c, i) => (
-            <Reveal key={c.name} delay={(i % 6) * 50}>
-              <article className="group glass-panel flex items-center gap-4 rounded-2xl p-3 transition-colors hover:border-primary/50">
-                <img
-                  src={pastImages[i % pastImages.length]}
-                  alt={`${c.name} in ${c.place}`}
-                  loading="lazy"
-                  width={200}
-                  height={200}
-                  className="h-20 w-24 shrink-0 rounded-xl object-cover"
-                />
-                <div className="min-w-0">
-                  <p className="truncate font-display text-[0.95rem] font-semibold">{c.name}</p>
-                  <p className="mt-1 font-mono text-[11px] text-muted-foreground">
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {featured.map((c, i) => (
+              <Reveal key={c.name} delay={i * 90}>
+                <article className="archive-feature group">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted shadow-card">
+                    <img
+                      src={pastImages[i % pastImages.length]}
+                      alt={`${c.name} in ${c.place}`}
+                      loading="lazy"
+                      width={900}
+                      height={675}
+                      className="h-full w-full object-cover saturate-[0.8] transition-all duration-700 group-hover:scale-105 group-hover:saturate-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                    <span className="absolute right-4 bottom-3 font-display text-5xl font-semibold text-foreground/20">
+                      {c.year.slice(2)}
+                    </span>
+                  </div>
+                  <p className="mt-5 font-mono text-[10px] uppercase text-primary">
                     {c.month} {c.year} · {c.place}
                   </p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-
-        {filtered.length > 12 && (
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={() => setShowAll((s) => !s)}
-              className="rounded-full border border-border px-6 py-2.5 text-sm font-medium transition-colors hover:border-primary/60 hover:bg-secondary"
-            >
-              {showAll ? "Show less" : `View all ${filtered.length} editions`}
-            </button>
+                  <h4 className="mt-2 font-display text-xl font-semibold transition-colors group-hover:text-primary">
+                    {c.name}
+                  </h4>
+                </article>
+              </Reveal>
+            ))}
           </div>
-        )}
+
+          {visibleArchive.length > 0 && (
+            <div className="relative mt-14 border-t border-border">
+              {visibleArchive.map((c, i) => (
+                <Reveal key={c.name} delay={(i % 5) * 45}>
+                  <article className="archive-row group grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 border-b border-border py-5 sm:grid-cols-[5rem_1fr_8rem_auto]">
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {String(i + 4).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <h4 className="font-display text-base font-medium transition-transform duration-300 group-hover:translate-x-1 sm:text-lg">
+                        {c.name}
+                      </h4>
+                      <p className="mt-1 text-xs text-muted-foreground sm:hidden">{c.place}</p>
+                    </div>
+                    <p className="hidden text-sm text-muted-foreground sm:block">{c.place}</p>
+                    <p className="font-mono text-[10px] uppercase text-muted-foreground">
+                      {c.month} {c.year}
+                    </p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          )}
+
+          {filtered.length > 12 && (
+            <div className="mt-9 flex justify-center">
+              <button
+                onClick={() => setShowAll((s) => !s)}
+                className="rounded-full border border-border px-6 py-2.5 text-sm font-medium transition-all hover:border-primary/60 hover:bg-secondary"
+              >
+                {showAll ? "Show fewer editions" : `Explore all ${filtered.length} editions`}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -257,38 +296,55 @@ const glimpses = [
 ];
 
 export function Gallery() {
+  const mosaicSpans = [
+    "sm:col-span-2 sm:row-span-2",
+    "sm:col-span-1 sm:row-span-1",
+    "sm:col-span-1 sm:row-span-1",
+    "sm:col-span-2 sm:row-span-1",
+    "sm:col-span-1 sm:row-span-2",
+    "sm:col-span-1 sm:row-span-1",
+    "sm:col-span-2 sm:row-span-1",
+    "sm:col-span-1 sm:row-span-1",
+    "sm:col-span-1 sm:row-span-1",
+    "sm:col-span-2 sm:row-span-2",
+  ];
+
   return (
     <section
       id="glimpses"
       className="section-pad relative overflow-hidden border-y border-border bg-surface/40"
     >
       <div className="mx-auto max-w-7xl px-6">
-        <Reveal className="mx-auto max-w-2xl text-center">
+        <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
           <span className="eyebrow justify-center">Event Glimpses</span>
           <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
-            Moments from <span className="text-gradient">our stages</span>
+              The energy behind <span className="text-gradient">every gathering</span>
           </h2>
-          <p className="mt-5 text-muted-foreground">
-            Twenty frames from keynotes, panels, roundtables, expos and gala nights across
-            our conference calendar.
-          </p>
+            <p className="mt-5 max-w-xl text-muted-foreground">
+              Twenty frames from keynotes, candid exchanges, roundtables and evenings that
+              move enterprise conversations forward.
+            </p>
+          </div>
+          <p className="font-mono text-xs text-muted-foreground">01 — 20 / CXO MEDIA</p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="gallery-mosaic mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:auto-rows-[180px] lg:auto-rows-[220px]">
           {glimpses.map((g, i) => (
             <Reveal key={`${g.label}-${i}`} delay={(i % 5) * 60}>
-              <figure className="group relative aspect-square overflow-hidden rounded-2xl border border-border">
+              <figure className={`group relative h-full min-h-44 overflow-hidden rounded-lg border border-border ${mosaicSpans[i % mosaicSpans.length]}`}>
                 <img
                   src={g.img}
                   alt={g.alt}
                   loading="lazy"
                   width={900}
                   height={900}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-70 transition-opacity group-hover:opacity-100" />
-                <figcaption className="absolute bottom-3 left-3 font-mono text-[10px] tracking-[0.16em] uppercase">
-                  {g.label}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
+                <figcaption className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 font-mono text-[10px] uppercase">
+                  <span className="transition-transform duration-300 group-hover:-translate-y-1">{g.label}</span>
+                  <span className="text-foreground/50">{String(i + 1).padStart(2, "0")}</span>
                 </figcaption>
               </figure>
             </Reveal>
@@ -302,40 +358,45 @@ export function Gallery() {
 /* ---------------- Partner logos (static grid) ---------------- */
 
 const partners = [
-  "TechNova",
-  "CloudAxis",
-  "SecureGrid",
-  "DataForge",
-  "NexaSoft",
-  "VertexAI",
-  "InfraCore",
-  "Quantiva",
-  "CyberShield",
-  "OptiCloud",
+  { name: "TechNova", mark: "TN", style: "font-display font-semibold" },
+  { name: "CloudAxis", mark: "CA", style: "font-sans font-light" },
+  { name: "SecureGrid", mark: "SG", style: "font-mono font-medium" },
+  { name: "DataForge", mark: "DF", style: "font-display font-semibold italic" },
+  { name: "NexaSoft", mark: "NX", style: "font-sans font-bold" },
+  { name: "VertexAI", mark: "VX", style: "font-mono font-medium" },
+  { name: "InfraCore", mark: "IC", style: "font-display font-semibold" },
+  { name: "Quantiva", mark: "Q", style: "font-sans font-light" },
+  { name: "CyberShield", mark: "CS", style: "font-display font-bold" },
+  { name: "OptiCloud", mark: "OC", style: "font-mono font-medium" },
 ];
 
 export function PartnerLogos() {
   return (
-    <section id="partner-logos" className="relative overflow-hidden py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow justify-center">Trusted By</span>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Technology brands that partner with CXO Media platforms
-          </p>
+    <section id="partner-logos" className="relative overflow-hidden border-y border-border py-24">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-30" />
+      <div className="relative mx-auto max-w-6xl px-6">
+        <Reveal className="text-center">
+          <span className="eyebrow justify-center">Strategic Partners & Sponsors</span>
+          <h2 className="mt-5 font-display text-[clamp(1.8rem,3vw,2.7rem)] font-semibold">
+            Trusted by technology <span className="text-gradient">leaders</span>
+          </h2>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3 lg:grid-cols-5">
-          {partners.map((p, i) => (
-            <Reveal key={p} delay={(i % 5) * 50}>
-              <div className="flex h-full items-center justify-center gap-3 bg-background px-4 py-8 transition-colors hover:bg-surface">
-                <span className="bg-gradient-brand flex h-8 w-8 items-center justify-center rounded-lg font-display text-xs font-bold text-primary-foreground">
-                  {p[0]}
-                </span>
-                <span className="font-display text-base font-semibold tracking-tight">{p}</span>
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-y border-border py-8 sm:gap-x-14 sm:gap-y-8 sm:py-12">
+          {partners.map((partner, i) => (
+            <Reveal key={partner.name} delay={(i % 5) * 55}>
+              <div className="partner-mark group relative flex min-w-36 items-center justify-center gap-3 overflow-hidden px-3 py-5 text-muted-foreground transition-colors duration-500 hover:text-foreground">
+                <span className="font-mono text-[9px] text-primary/70">{partner.mark}</span>
+                <span className={`text-lg sm:text-xl ${partner.style}`}>{partner.name}</span>
               </div>
             </Reveal>
           ))}
         </div>
+        <Reveal delay={120} className="mt-8 text-center">
+          <p className="text-xs text-muted-foreground">
+            Building meaningful connections between enterprise decision-makers and
+            technology innovators.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
