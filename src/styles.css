@@ -202,3 +202,64 @@
 @utility animate-marquee {
   animation: marquee-x 38s linear infinite;
 }
+
+@utility archive-feature {
+  position: relative;
+}
+
+@utility archive-row {
+  position: relative;
+}
+
+.archive-row::before {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  content: "";
+  background-image: var(--gradient-brand);
+  transition: width 450ms ease;
+}
+
+.archive-row:hover::before {
+  width: 100%;
+}
+
+.gallery-mosaic > div {
+  min-width: 0;
+  height: 100%;
+}
+
+.partner-mark::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    color-mix(in oklab, var(--violet-brand) 14%, transparent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.partner-mark:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
