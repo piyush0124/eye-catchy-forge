@@ -1,4 +1,5 @@
 import heroImg from "@/assets/hero-conference.jpg";
+import heroVideo from "@/assets/hero-conference-video.mp4.asset.json";
 
 const stats = [
   { value: "10+", label: "Engagement formats" },
@@ -10,12 +11,24 @@ const stats = [
 export function Hero() {
   return (
     <section id="top" className="relative isolate min-h-screen overflow-hidden">
+      <video
+        className="absolute inset-0 -z-20 h-full w-full object-cover motion-reduce:hidden"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={heroImg}
+        aria-hidden="true"
+      >
+        <source src={heroVideo.url} type="video/mp4" />
+      </video>
       <img
         src={heroImg}
         alt="Keynote speaker on stage at a CXO Media enterprise technology conference"
         width={1920}
         height={1088}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        className="absolute inset-0 -z-20 hidden h-full w-full object-cover motion-reduce:block"
       />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,oklch(0.14_0.03_285/0.96),oklch(0.14_0.03_285/0.72)_55%,oklch(0.14_0.03_285/0.35))]" />
       <div className="grid-lines absolute inset-0 -z-10 opacity-40" />
