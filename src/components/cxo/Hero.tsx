@@ -1,5 +1,5 @@
 // import heroImg from "@/assets/hero-conference.jpg";
-import heroVideo from "@/assets/hero-conference-video-11.mp4";
+import heroVideo from "@/assets/hero-conference-video-112.mp4";
 
 const stats = [
   { value: "10+", label: "Engagement formats" },
