@@ -1,11 +1,11 @@
-import heroImg from "@/assets/hero-conference.jpg";
-import heroVideo from "@/assets/hero-conference-video.mp4.asset.json";
+// import heroImg from "@/assets/hero-conference.jpg";
+import heroVideo from "@/assets/hero-conference-video-11.mp4";
 
 const stats = [
   { value: "10+", label: "Engagement formats" },
   { value: "11", label: "Sectors covered" },
   { value: "C-Suite", label: "Audience focus" },
-  { value: "APAC", label: "Media initiative" },
+  // { value: "APAC", label: "Media initiative" },
 ];
 
 export function Hero() {
@@ -18,18 +18,18 @@ export function Hero() {
         loop
         playsInline
         preload="metadata"
-        poster={heroImg}
+        // poster={heroImg}
         aria-hidden="true"
       >
-        <source src={heroVideo.url} type="video/mp4" />
+        <source src={heroVideo} type="video/mp4"/>
       </video>
-      <img
+      {/* <img
         src={heroImg}
         alt="Keynote speaker on stage at a CXO Media enterprise technology conference"
         width={1920}
         height={1088}
         className="absolute inset-0 -z-20 hidden h-full w-full object-cover motion-reduce:block"
-      />
+      /> */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,oklch(0.14_0.03_285/0.96),oklch(0.14_0.03_285/0.72)_55%,oklch(0.14_0.03_285/0.35))]" />
       <div className="grid-lines absolute inset-0 -z-10 opacity-40" />
 
@@ -39,12 +39,12 @@ export function Hero() {
           An initiative by APAC Media
         </span>
 
-        <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.6rem,6.4vw,5.2rem)] leading-[0.98] font-semibold">
+        <h1 className="mt-6 max-w-4xl font-display where leading-[0.98] font-semibold">
           Where enterprise leaders meet{" "}
           <span className="text-gradient">technology innovation</span>.
         </h1>
 
-        <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-7 max-w-2xl where-p leading-relaxed text-muted-foreground">
           CXO Media builds high-impact conferences, executive roundtables and leadership
           forums for the C-suite, technology leadership and senior IT decision-makers
           across Asia-Pacific.
@@ -65,7 +65,7 @@ export function Hero() {
           </a>
         </div>
 
-        <dl className="mt-16 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
+        <dl className="mt-16 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-3">
           {stats.map((s) => (
             <div key={s.label} className="glass-panel border-0 px-6 py-6">
               <dt className="font-display text-3xl font-semibold text-gradient">

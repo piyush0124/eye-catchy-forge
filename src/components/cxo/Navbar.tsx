@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import  logoImg  from "@/assets/cxo-media-color-scaled.webp"
 
 const links = [
   { href: "#about", label: "About" },
-  { href: "#capabilities", label: "Capabilities" },
   { href: "#conferences", label: "Conferences" },
   { href: "#glimpses", label: "Glimpses" },
-  { href: "#audience", label: "Audience" },
-  { href: "#sectors", label: "Sectors" },
   { href: "#partners", label: "Partners" },
   { href: "#team", label: "Team" },
-  { href: "#linkedin", label: "LinkedIn" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -33,13 +30,8 @@ export function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="flex items-center gap-3">
-          <span className="bg-gradient-brand flex h-9 w-9 items-center justify-center rounded-xl font-display text-sm font-bold text-primary-foreground">
-            CX
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            CXO<span className="text-gradient">Media</span>
-          </span>
+        <a href="#top" className="flex items-center gap-3 logo-width">
+          <img src={logoImg} alt="Logo" className=" w-auto" />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">

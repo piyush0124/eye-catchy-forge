@@ -263,3 +263,19 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.where{
+  font-size:46px;
+  line-height: 56px;
+}
+.where-p{
+  font-size:17px;
+  line-height: 30px;
+}
+.logo-width{
+  width: 7%;
+}
+.head-1{
+  font-size:36px;
+  line-height: 44px;
+}

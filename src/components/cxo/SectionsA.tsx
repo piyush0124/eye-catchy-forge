@@ -1,8 +1,8 @@
-import aboutImg from "@/assets/about-roundtable.jpg";
+import aboutImg from "@/assets/about-2.png";
 import panelImg from "@/assets/event-panel.jpg";
 import dinnerImg from "@/assets/event-dinner.jpg";
 import networkingImg from "@/assets/event-networking.jpg";
-import speakerImg from "@/assets/event-speaker.jpg";
+import speakerImg from "@/assets/der.jpg";
 import { Reveal } from "./Reveal";
 
 export function About() {
@@ -42,15 +42,15 @@ export function About() {
             <div className="absolute inset-0 bg-[linear-gradient(to_top,oklch(0.14_0.03_285/0.75),transparent_55%)]" />
           </div>
           <div className="glass-panel animate-float absolute -right-4 bottom-10 rounded-2xl px-5 py-4 shadow-elegant">
-            <p className="font-display text-sm font-semibold">Executive Roundtables</p>
-            <p className="text-xs text-muted-foreground">Invite-only, peer-led</p>
+            <p className="font-display text-sm font-semibold">Invite-only, peer-led</p>
+            {/* <p className="text-xs text-muted-foreground">Invite-only, peer-led</p> */}
           </div>
         </Reveal>
 
         <div>
           <Reveal>
             <span className="eyebrow">About CXO Media</span>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+            <h2 className="mt-5 font-display head-1  font-semibold">
               Connecting enterprise leaders with{" "}
               <span className="text-gradient">technology innovation</span>
             </h2>
@@ -119,7 +119,7 @@ export function Purpose() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal>
           <span className="eyebrow">Our Purpose</span>
-          <h2 className="mt-6 font-display text-[clamp(1.9rem,4.2vw,3.4rem)] leading-[1.1] font-semibold">
+          <h2 className="mt-6 font-display head-1  font-semibold">
             To create credible, high-value platforms that help enterprise technology
             leaders stay{" "}
             <span className="text-gradient">informed, connected and prepared</span> for
@@ -164,7 +164,7 @@ export function Mission() {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="max-w-3xl">
           <span className="eyebrow">Our Mission</span>
-          <p className="mt-5 font-display text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2] font-medium">
+          <p className="mt-5 font-display head-1  font-medium">
             To empower enterprises, technology leaders and solution providers with the
             insights, access and engagement opportunities required to{" "}
             <span className="text-gradient">
@@ -229,7 +229,7 @@ export function Capabilities() {
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="max-w-3xl">
           <span className="eyebrow">Our Capabilities</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+          <h2 className="mt-5 font-display head-1 font-semibold">
             End-to-end enterprise engagement and{" "}
             <span className="text-gradient">thought leadership</span>
           </h2>
