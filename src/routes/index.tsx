@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/cxo/Navbar";
 import { Hero } from "@/components/cxo/Hero";
 import { About, Purpose, Mission, Capabilities } from "@/components/cxo/SectionsA";
+import { LatestNews } from "@/components/cxo/LatestNews";
+import { UpcomingConferences } from "@/components/cxo/upcoming-conferences";
+import { PastConferencesPage } from "@/components/cxo/past-conferences";
+
 import {
   Audience,
   Sectors,
@@ -9,8 +13,8 @@ import {
   WhyAndCommitment,
   ContactFooter,
 } from "@/components/cxo/SectionsB";
-import { Conferences, Gallery, PartnerLogos, Team } from "@/components/cxo/SectionsC";
-import { LinkedInFeed } from "@/components/cxo/LinkedInFeed";
+import {  Gallery, PartnerLogos, Team } from "@/components/cxo/SectionsC";
+import { LinkedInPosts } from "@/components/cxo/LinkedInPosts";
 
 const title = "CXO Media | Enterprise Technology Events for the C-Suite";
 const description =
@@ -39,14 +43,17 @@ function Index() {
       <Purpose />
       <Mission />
       <Capabilities />
-      <Conferences />
+      <LatestNews categorySlug="interviews" count={6} />
+      <UpcomingConferences />
+      <PastConferencesPage />
+      {/* <Conferences /> */}
       <Gallery />
       <Audience />
       <Sectors />
       <Partners />
       <PartnerLogos />
       <Team />
-      <LinkedInFeed />
+      <LinkedInPosts />
       <WhyAndCommitment />
       <ContactFooter />
     </main>

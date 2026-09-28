@@ -17,11 +17,11 @@ export function Audience() {
 
   return (
     <section id="audience" className="section-pad relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center audi">
         <div>
           <Reveal>
             <span className="eyebrow">Our Audience</span>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+            <h2 className="mt-5 font-display head-1 font-semibold">
               The leaders who set the{" "}
               <span className="text-gradient">enterprise technology agenda</span>
             </h2>
@@ -37,9 +37,8 @@ export function Audience() {
                 src={panelImg}
                 alt="C-suite panel discussion at a CXO Media summit"
                 loading="lazy"
-                width={1200}
-                height={912}
-                className="h-64 w-full object-cover"
+                style={{ width: "100%", height: "auto" }}
+                className=""
               />
             </figure>
           </Reveal>
@@ -83,7 +82,7 @@ export function Sectors() {
       <div className="mx-auto max-w-6xl px-6 text-center">
         <Reveal>
           <span className="eyebrow">Sectoral Focus</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+          <h2 className="mt-5 font-display  head-1 font-semibold">
             Where technology is central to{" "}
             <span className="text-gradient">competitiveness and resilience</span>
           </h2>
@@ -137,7 +136,7 @@ export function Partners() {
       <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:items-center">
         <Reveal>
           <span className="eyebrow">Value for Technology Partners</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+          <h2 className="mt-5 font-display head-1 font-semibold">
             Targeted, credible and{" "}
             <span className="text-gradient">outcome-oriented</span> platforms
           </h2>
@@ -150,9 +149,8 @@ export function Partners() {
               src={networkingImg}
               alt="Technology partners and enterprise leaders networking at a CXO Media event"
               loading="lazy"
-              width={1200}
-              height={912}
-              className="h-64 w-full object-cover"
+           style={{ width: "100%", height: "auto" }}
+              className=""
             />
           </figure>
         </Reveal>

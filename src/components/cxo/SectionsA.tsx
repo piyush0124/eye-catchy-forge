@@ -1,5 +1,5 @@
 import aboutImg from "@/assets/about-2.png";
-import panelImg from "@/assets/event-panel.jpg";
+import panelImg from "/video-1.mp4";
 import dinnerImg from "@/assets/event-dinner.jpg";
 import networkingImg from "@/assets/event-networking.jpg";
 import speakerImg from "@/assets/der.jpg";
@@ -164,7 +164,7 @@ export function Mission() {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="max-w-3xl">
           <span className="eyebrow">Our Mission</span>
-          <p className="mt-5 font-display head-1  font-medium">
+          <h3 className="mt-5 font-display head-1  font-medium  mission">
             To empower enterprises, technology leaders and solution providers with the
             insights, access and engagement opportunities required to{" "}
             <span className="text-gradient">
@@ -172,7 +172,7 @@ export function Mission() {
               business growth
             </span>
             .
-          </p>
+          </h3>
         </Reveal>
 
         <div className="mt-14 grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
@@ -217,8 +217,8 @@ export function Capabilities() {
 
   const gallery = [
     { src: panelImg, alt: "Panel discussion at an enterprise cybersecurity summit" },
-    { src: dinnerImg, alt: "Invite-only executive leadership dinner" },
-    { src: networkingImg, alt: "Delegates networking at a CXO Media evening reception" },
+    // { src: dinnerImg, alt: "Invite-only executive leadership dinner" },
+    // { src: networkingImg, alt: "Delegates networking at a CXO Media evening reception" },
   ];
 
   return (
@@ -238,7 +238,7 @@ export function Capabilities() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] cap">
           <ol className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-2">
             {items.map((item, i) => (
               <li
@@ -257,17 +257,15 @@ export function Capabilities() {
             {gallery.map((g, i) => (
               <Reveal key={g.alt} delay={i * 90}>
                 <figure className="relative overflow-hidden rounded-3xl border border-border shadow-card">
-                  <img
+                  <video
                     src={g.src}
-                    alt={g.alt}
-                    loading="lazy"
-                    width={1200}
-                    height={912}
-                    className="h-56 w-full object-cover transition-transform duration-700 hover:scale-105 lg:h-64"
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls={false}
                   />
-                  <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,oklch(0.14_0.03_285/0.9),transparent)] p-5 text-sm">
-                    {g.alt}
-                  </figcaption>
                 </figure>
               </Reveal>
             ))}

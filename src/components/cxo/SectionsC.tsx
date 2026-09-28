@@ -1,113 +1,63 @@
-import { useMemo, useState } from "react";
 import { CalendarDays, MapPin, Users, Linkedin, ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
-import heroImg from "@/assets/hero-conference.jpg";
-import roundtableImg from "@/assets/about-roundtable.jpg";
-import networkingImg from "@/assets/event-networking.jpg";
-import panelImg from "@/assets/event-panel.jpg";
-import dinnerImg from "@/assets/event-dinner.jpg";
-import speakerImg from "@/assets/event-speaker.jpg";
-import bannerCio from "@/assets/banner-cio.jpg";
-import bannerCiso from "@/assets/banner-ciso.jpg";
-import bannerAi from "@/assets/banner-ai.jpg";
-import g1 from "@/assets/g1.jpg";
-import g2 from "@/assets/g2.jpg";
-import g3 from "@/assets/g3.jpg";
-import g4 from "@/assets/g4.jpg";
-import g5 from "@/assets/g5.jpg";
-import g6 from "@/assets/g6.jpg";
-import g7 from "@/assets/g7.jpg";
-import g8 from "@/assets/g8.jpg";
-import g9 from "@/assets/g9.jpg";
-import g10 from "@/assets/g10.jpg";
-import g11 from "@/assets/g11.jpg";
-import g12 from "@/assets/g12.jpg";
-import g13 from "@/assets/g13.jpg";
-import g14 from "@/assets/g14.jpg";
-import director1 from "@/assets/director-1.jpg";
-import director2 from "@/assets/director-2.jpg";
+
+import g1 from "@/assets/g1.webp";
+import g2 from "@/assets/g2.webp";
+import g3 from "@/assets/g3.webp";
+import g4 from "@/assets/g4.webp";
+import g5 from "@/assets/g5.webp";
+import g6 from "@/assets/g6.webp";
+import g7 from "@/assets/g7.webp";
+import g8 from "@/assets/g8.webp";
+import g9 from "@/assets/g9.webp";
+import g10 from "@/assets/g10.webp";
+import g11 from "@/assets/g11.webp";
+import g12 from "@/assets/g12.webp";
+import g13 from "@/assets/g13.webp";
+import g14 from "@/assets/g14.webp";
+import director1 from "@/assets/mam-1-1.png";
+import director2 from "@/assets/gopi-sir-1-1.png";
 import director3 from "@/assets/director-3.jpg";
 
 /* ---------------- Conferences ---------------- */
 
 const upcoming = [
   {
-    name: "CIO Leadership Summit 2026",
-    date: "Nov 12–13, 2026",
-    place: "New Delhi, India",
-    desc: "India's premier gathering of CIOs and IT decision-makers on enterprise AI, cloud and digital resilience.",
-    seats: "250+ CXOs",
-    banner: bannerCio,
-  },
-  {
-    name: "CISO Security Forum",
-    date: "Dec 09, 2026",
-    place: "Mumbai, India",
-    desc: "A closed-door forum for cybersecurity leaders on zero-trust, AI-driven threats and board-level risk.",
-    seats: "120+ CISOs",
-    banner: bannerCiso,
-  },
-  {
-    name: "Enterprise AI & Data Conclave",
-    date: "Feb 18, 2027",
+    name: "Cyber Resilience Decode",
+    date: "Sept 25, 2026",
     place: "Bengaluru, India",
-    desc: "Data, analytics and AI leaders decode real-world enterprise AI adoption, governance and ROI.",
-    seats: "200+ Leaders",
-    banner: bannerAi,
+    desc: "Cyber Resilience Decode on 25th September 2026 in Bengaluru",
+    banner: "https://apacnewsnetwork.com/wp-content/uploads/2026/09/sify-bangalore.jpeg?v=1789368997",
+  },
+  {
+    name: "The Future of Water Infrastructure",
+    date: "30th September 2026",
+    place: "Mumbai, India",
+    desc: "The Future of Water Infrastructure on 30th September 2026 in Mumbai",
+    banner: "https://apacnewsnetwork.com/wp-content/uploads/2026/09/Autodesk_KOLKATA-Mumbai-14_800X400-copyBanner.png?v=1789369018",
+  },
+  {
+    name: "AI for Viksit Bharat@2047 Summit ",
+    date: "8th October 2026",
+    place: "Uttar Pradesh, India",
+    desc: "AI for Viksit Bharat@2047 Summit on 8th October 2026 in Lucknow | Uttar pradesh",
+    banner: "https://apacnewsnetwork.com/wp-content/uploads/2026/08/AI-Summit-Lukhnow-_800X400.png?v=1788158954",
+  },
+  {
+    name: "Secure-In 2026",
+    date: "25th - 26th November 2026",
+    place: "New Delhi, India",
+    desc: "Secure-In 2026 on 25th - 26th November 2026 in New Delhi",
+    banner: "https://apacnewsnetwork.com/wp-content/uploads/2026/09/Secure-In-800X400@4x.png?v=1788245888",
   },
 ];
 
-type PastEvent = { name: string; month: string; year: string; place: string };
 
-const past: PastEvent[] = [
-  { name: "Digital Transformation Summit", month: "Mar", year: "2026", place: "Hyderabad" },
-  { name: "CXO Power Roundtable", month: "Feb", year: "2026", place: "Gurugram" },
-  { name: "Cloud Modernisation Forum", month: "Feb", year: "2026", place: "Pune" },
-  { name: "Data Leaders Conclave", month: "Jan", year: "2026", place: "Bengaluru" },
-  { name: "CISO Trust Summit", month: "Jan", year: "2026", place: "Mumbai" },
-  { name: "AI in BFSI Symposium", month: "Jan", year: "2026", place: "Mumbai" },
-  { name: "Enterprise Tech Leadership Night", month: "Dec", year: "2025", place: "Mumbai" },
-  { name: "CIO Innovation Awards", month: "Dec", year: "2025", place: "New Delhi" },
-  { name: "Future of Work Roundtable", month: "Nov", year: "2025", place: "Chennai" },
-  { name: "Zero Trust Security Forum", month: "Nov", year: "2025", place: "Bengaluru" },
-  { name: "Manufacturing 4.0 Summit", month: "Oct", year: "2025", place: "Ahmedabad" },
-  { name: "Healthcare Digital Conclave", month: "Oct", year: "2025", place: "Hyderabad" },
-  { name: "Retail Tech Leadership Forum", month: "Sep", year: "2025", place: "Mumbai" },
-  { name: "SaaS & Platform Engineering Meet", month: "Sep", year: "2025", place: "Bengaluru" },
-  { name: "CXO Networking Gala", month: "Aug", year: "2025", place: "Goa" },
-  { name: "Digital Banking Summit", month: "Aug", year: "2025", place: "Mumbai" },
-  { name: "Observability & DevOps Forum", month: "Jul", year: "2025", place: "Pune" },
-  { name: "GenAI Adoption Roundtable", month: "Jul", year: "2025", place: "Gurugram" },
-  { name: "Public Sector Tech Dialogue", month: "Jun", year: "2025", place: "New Delhi" },
-  { name: "Cyber Resilience Masterclass", month: "Jun", year: "2025", place: "Kolkata" },
-  { name: "Supply Chain Digitisation Forum", month: "May", year: "2025", place: "Chennai" },
-  { name: "Enterprise Networking Summit", month: "May", year: "2025", place: "Bengaluru" },
-  { name: "CIO Breakfast Briefing", month: "Apr", year: "2025", place: "Mumbai" },
-  { name: "Insurance Tech Conclave", month: "Apr", year: "2025", place: "Hyderabad" },
-  { name: "Data Privacy & DPDP Forum", month: "Mar", year: "2025", place: "New Delhi" },
-  { name: "Edge & IoT Leadership Meet", month: "Mar", year: "2025", place: "Pune" },
-  { name: "Customer Experience Summit", month: "Feb", year: "2025", place: "Mumbai" },
-  { name: "Women in Tech Leadership Forum", month: "Feb", year: "2025", place: "Bengaluru" },
-  { name: "Sustainable IT Roundtable", month: "Jan", year: "2025", place: "Gurugram" },
-  { name: "Annual CXO Excellence Awards", month: "Jan", year: "2025", place: "New Delhi" },
-  { name: "Hybrid Cloud Strategy Forum", month: "Dec", year: "2024", place: "Mumbai" },
-  { name: "Digital India Tech Dialogue", month: "Nov", year: "2024", place: "New Delhi" },
-];
 
-const pastImages = [speakerImg, roundtableImg, dinnerImg, panelImg, networkingImg, heroImg];
+
 
 export function Conferences() {
-  const years = useMemo(
-    () => ["All", ...Array.from(new Set(past.map((p) => p.year)))],
-    [],
-  );
-  const [year, setYear] = useState("All");
-  const [showAll, setShowAll] = useState(false);
-
-  const filtered = year === "All" ? past : past.filter((p) => p.year === year);
-  const featured = filtered.slice(0, 3);
-  const archive = filtered.slice(3);
-  const visibleArchive = showAll ? archive : archive.slice(0, 9);
+ 
 
   return (
     <section id="conferences" className="section-pad relative overflow-hidden">
@@ -115,16 +65,16 @@ export function Conferences() {
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="max-w-2xl">
           <span className="eyebrow">Upcoming Conferences</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+          <h2 className="mt-5 font-display head-1 font-semibold">
             Where enterprise technology leadership{" "}
             <span className="text-gradient">converges</span>
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 lg:grid-cols-4">
           {upcoming.map((c, i) => (
             <Reveal key={c.name} delay={i * 80}>
-              <article className="group glass-panel flex h-full flex-col overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-elegant">
+              <article className="group glass-panel up-1 flex h-full flex-col overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-elegant">
                 <div className="relative aspect-[2/1] overflow-hidden">
                   <img
                     src={c.banner}
@@ -140,20 +90,18 @@ export function Conferences() {
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-7">
-                  <h3 className="font-display text-xl font-semibold">{c.name}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <h3 className="font-display up-2 text-xl font-semibold" style={{'font-size':'16px;'}}>{c.name}</h3>
+                  <p className="mt-3 up-3 flex-1  text-muted-foreground"style={{'font-size':'13px!important;'}}>
                     {c.desc}
                   </p>
-                  <div className="mt-6 space-y-2 border-t border-border pt-5 text-sm text-muted-foreground">
+                  <div className=" space-y-2 border-t border-border pt-5  text-muted-foreground ">
                     <p className="flex items-center gap-2">
                       <CalendarDays className="h-4 w-4 text-primary" /> {c.date}
                     </p>
                     <p className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-primary" /> {c.place}
                     </p>
-                    <p className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-primary" /> {c.seats}
-                    </p>
+                    
                   </div>
                   <a
                     href="#contact"
@@ -167,104 +115,10 @@ export function Conferences() {
           ))}
         </div>
 
-        {/* Past editions */}
-        <div className="mt-24 border-t border-border pt-12">
-          <Reveal className="flex flex-wrap items-end justify-between gap-8">
-            <div className="max-w-xl">
-              <span className="eyebrow">Event Archive</span>
-              <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.3rem)] leading-none font-semibold">
-                Past <span className="text-gradient">editions</span>
-              </h3>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                A growing record of conversations, connections and ideas shaping enterprise
-                technology across India.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2" aria-label="Filter past events by year">
-            {years.map((y) => (
-              <button
-                key={y}
-                onClick={() => {
-                  setYear(y);
-                  setShowAll(false);
-                }}
-                aria-pressed={year === y}
-                className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase transition-all duration-300 ${
-                  year === y
-                    ? "border-primary bg-primary text-primary-foreground shadow-elegant"
-                    : "border-border text-muted-foreground hover:border-primary/60 hover:text-foreground"
-                }`}
-              >
-                {y}
-              </button>
-            ))}
-            </div>
-          </Reveal>
+       
 
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {featured.map((c, i) => (
-              <Reveal key={c.name} delay={i * 90}>
-                <article className="archive-feature group">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted shadow-card">
-                    <img
-                      src={pastImages[i % pastImages.length]}
-                      alt={`${c.name} in ${c.place}`}
-                      loading="lazy"
-                      width={900}
-                      height={675}
-                      className="h-full w-full object-cover saturate-[0.8] transition-all duration-700 group-hover:scale-105 group-hover:saturate-100"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                    <span className="absolute right-4 bottom-3 font-display text-5xl font-semibold text-foreground/20">
-                      {c.year.slice(2)}
-                    </span>
-                  </div>
-                  <p className="mt-5 font-mono text-[10px] uppercase text-primary">
-                    {c.month} {c.year} · {c.place}
-                  </p>
-                  <h4 className="mt-2 font-display text-xl font-semibold transition-colors group-hover:text-primary">
-                    {c.name}
-                  </h4>
-                </article>
-              </Reveal>
-            ))}
-          </div>
 
-          {visibleArchive.length > 0 && (
-            <div className="relative mt-14 border-t border-border">
-              {visibleArchive.map((c, i) => (
-                <Reveal key={c.name} delay={(i % 5) * 45}>
-                  <article className="archive-row group grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 border-b border-border py-5 sm:grid-cols-[5rem_1fr_8rem_auto]">
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {String(i + 4).padStart(2, "0")}
-                    </span>
-                    <div className="min-w-0">
-                      <h4 className="font-display text-base font-medium transition-transform duration-300 group-hover:translate-x-1 sm:text-lg">
-                        {c.name}
-                      </h4>
-                      <p className="mt-1 text-xs text-muted-foreground sm:hidden">{c.place}</p>
-                    </div>
-                    <p className="hidden text-sm text-muted-foreground sm:block">{c.place}</p>
-                    <p className="font-mono text-[10px] uppercase text-muted-foreground">
-                      {c.month} {c.year}
-                    </p>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          )}
-
-          {filtered.length > 12 && (
-            <div className="mt-9 flex justify-center">
-              <button
-                onClick={() => setShowAll((s) => !s)}
-                className="rounded-full border border-border px-6 py-2.5 text-sm font-medium transition-all hover:border-primary/60 hover:bg-secondary"
-              >
-                {showAll ? "Show fewer editions" : `Explore all ${filtered.length} editions`}
-              </button>
-            </div>
-          )}
-        </div>
+        
       </div>
     </section>
   );
@@ -273,81 +127,88 @@ export function Conferences() {
 /* ---------------- Gallery (20 images) ---------------- */
 
 const glimpses = [
-  { img: heroImg, alt: "Keynote address at a CXO Media summit", label: "Keynote" },
-  { img: g1, alt: "Audience applauding in a packed auditorium", label: "Audience" },
-  { img: g13, alt: "Panelists on stage at a CIO forum", label: "CIO Forum" },
-  { img: panelImg, alt: "Executive panel discussion on stage", label: "Panel" },
-  { img: g4, alt: "Executive speaking at a podium", label: "Keynote" },
-  { img: g5, alt: "Fireside chat between two executives", label: "Fireside" },
-  { img: g12, alt: "Delegate asking a question during Q&A", label: "Q&A" },
-  { img: speakerImg, alt: "Speaker addressing the summit", label: "Speaker" },
-  { img: roundtableImg, alt: "Closed-door CXO roundtable", label: "Roundtable" },
-  { img: g10, alt: "Executive strategy workshop", label: "Workshop" },
-  { img: networkingImg, alt: "CXOs networking at an evening reception", label: "Networking" },
-  { img: g8, alt: "Delegates networking over coffee", label: "Coffee Break" },
-  { img: g9, alt: "Business cards exchanged at a summit", label: "Connections" },
-  { img: g3, alt: "Registration desk at a technology summit", label: "Registration" },
-  { img: g6, alt: "Technology expo booths at a summit", label: "Expo" },
-  { img: g2, alt: "Award handover at a leadership awards night", label: "Awards" },
-  { img: g7, alt: "Group photo of award winners on stage", label: "Winners" },
-  { img: dinnerImg, alt: "Executive leadership dinner", label: "Gala Dinner" },
-  { img: g11, alt: "Gala dinner ballroom with violet lighting", label: "Ballroom" },
-  { img: g14, alt: "Rooftop cocktail reception with skyline view", label: "Reception" },
+  { img: g1, alt: "Audience applauding in a packed auditorium"},
+  { img: g13, alt: "Panelists on stage at a CIO forum"},
+  { img: g4, alt: "Executive speaking at a podium"},
+  { img: g5, alt: "Fireside chat between two executives"},
+  { img: g12, alt: "Delegate asking a question during Q&A"},
+  { img: g10, alt: "Executive strategy workshop"},
+  { img: g8, alt: "Delegates networking over coffee"},
+  { img: g9, alt: "Business cards exchanged at a summit"},
+  { img: g3, alt: "Registration desk at a technology summit"},
+  { img: g6, alt: "Technology expo booths at a summit"},
+  { img: g2, alt: "Award handover at a leadership awards night" },
+  { img: g7, alt: "Group photo of award winners on stage" },
+  { img: g11, alt: "Gala dinner ballroom with violet lighting" },
+  { img: g14, alt: "Rooftop cocktail reception with skyline view" },
 ];
 
+interface MarqueeCardProps {
+  item: (typeof glimpses)[number];
+  index: number;
+}
+
+function MarqueeCard({ item, index }: MarqueeCardProps) {
+  return (
+    <figure className="group relative h-56 w-72 shrink-0 overflow-hidden rounded-xl border border-border bg-card sm:h-64 sm:w-80 [transform:translateZ(0)]">
+      <img
+        src={item.img}
+        alt={item.alt}
+        loading="lazy"
+        decoding="async" /* Browser ko background me image decode karne deta hai */
+        className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-70" />
+      <figcaption className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 font-mono text-[11px] uppercase tracking-wider">
+        {/* <span className="truncate text-foreground">{item.label || item.alt}</span> */}
+        {/* <span className="text-muted-foreground">{String(index + 1).padStart(2, "0")}</span> */}
+      </figcaption>
+    </figure>
+  );
+}
+
+
 export function Gallery() {
-  const mosaicSpans = [
-    "sm:col-span-2 sm:row-span-2",
-    "sm:col-span-1 sm:row-span-1",
-    "sm:col-span-1 sm:row-span-1",
-    "sm:col-span-2 sm:row-span-1",
-    "sm:col-span-1 sm:row-span-2",
-    "sm:col-span-1 sm:row-span-1",
-    "sm:col-span-2 sm:row-span-1",
-    "sm:col-span-1 sm:row-span-1",
-    "sm:col-span-1 sm:row-span-1",
-    "sm:col-span-2 sm:row-span-2",
-  ];
+  const row1 = glimpses.slice(0, Math.ceil(glimpses.length / 2));
+  const row2 = glimpses.slice(Math.ceil(glimpses.length / 2));
 
   return (
     <section
       id="glimpses"
-      className="section-pad relative overflow-hidden border-y border-border bg-surface/40"
+      className="section-pad relative overflow-hidden border-y border-border bg-surface/40 py-20"
     >
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-          <span className="eyebrow justify-center">Event Glimpses</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+            <span className="eyebrow justify-center">Event Glimpses</span>
+            <h2 className="mt-5 font-display head-1 leading-[1.05] font-semibold">
               The energy behind <span className="text-gradient">every gathering</span>
-          </h2>
+            </h2>
             <p className="mt-5 max-w-xl text-muted-foreground">
-              Twenty frames from keynotes, candid exchanges, roundtables and evenings that
+              Frames from keynotes, candid exchanges, roundtables, and evenings that
               move enterprise conversations forward.
             </p>
           </div>
-          <p className="font-mono text-xs text-muted-foreground">01 — 20 / CXO MEDIA</p>
         </Reveal>
+      </div>
 
-        <div className="gallery-mosaic mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:auto-rows-[180px] lg:auto-rows-[220px]">
-          {glimpses.map((g, i) => (
-            <Reveal key={`${g.label}-${i}`} delay={(i % 5) * 60}>
-              <figure className={`group relative h-full min-h-44 overflow-hidden rounded-lg border border-border ${mosaicSpans[i % mosaicSpans.length]}`}>
-                <img
-                  src={g.img}
-                  alt={g.alt}
-                  loading="lazy"
-                  width={900}
-                  height={900}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
-                <figcaption className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 font-mono text-[10px] uppercase">
-                  <span className="transition-transform duration-300 group-hover:-translate-y-1">{g.label}</span>
-                  <span className="text-foreground/50">{String(i + 1).padStart(2, "0")}</span>
-                </figcaption>
-              </figure>
-            </Reveal>
+      {/* Marquee Container with side fade masks */}
+      <div className="relative mt-12 flex flex-col gap-5 overflow-hidden">
+        {/* Left & Right gradient fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background via-background/70 to-transparent sm:w-36" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background via-background/70 to-transparent sm:w-36" />
+
+        {/* Row 1: Leftward scroll */}
+        <div className="flex w-fit animate-marquee-left gap-5 hover:[animation-play-state:paused]">
+          {[...row1, ...row1].map((g, i) => (
+            <MarqueeCard key={`row1-${i}`} item={g} index={i % row1.length} />
+          ))}
+        </div>
+
+        {/* Row 2: Rightward scroll */}
+        <div className="flex w-fit animate-marquee-right gap-5 hover:[animation-play-state:paused]">
+          {[...row2, ...row2].map((g, i) => (
+            <MarqueeCard key={`row2-${i}`} item={g} index={i % row2.length} />
           ))}
         </div>
       </div>
@@ -357,40 +218,76 @@ export function Gallery() {
 
 /* ---------------- Partner logos (static grid) ---------------- */
 
-const partners = [
-  { name: "TechNova", mark: "TN", style: "font-display font-semibold" },
-  { name: "CloudAxis", mark: "CA", style: "font-sans font-light" },
-  { name: "SecureGrid", mark: "SG", style: "font-mono font-medium" },
-  { name: "DataForge", mark: "DF", style: "font-display font-semibold italic" },
-  { name: "NexaSoft", mark: "NX", style: "font-sans font-bold" },
-  { name: "VertexAI", mark: "VX", style: "font-mono font-medium" },
-  { name: "InfraCore", mark: "IC", style: "font-display font-semibold" },
-  { name: "Quantiva", mark: "Q", style: "font-sans font-light" },
-  { name: "CyberShield", mark: "CS", style: "font-display font-bold" },
-  { name: "OptiCloud", mark: "OC", style: "font-mono font-medium" },
+interface Partner {
+  name: string;
+  logo: string;
+  invertOnWhite?: boolean;
+}
+
+const partners: Partner[] = [
+  { name: "Adobe", logo: "/logos/adobe-logo.webp" },
+  { name: "Autodesk", logo: "/logos/autodesk-logo.png" },
+  { name: "Coursera", logo: "/logos/coursera-logo.jpg" },
+  { name: "Dell", logo: "/logos/dell_logo.png" },
+  { name: "Fortinet", logo: "/logos/fortinet-logo.svg" },
+  { name: "iValue InfoSolutions", logo: "/logos/ivalue-logo.jpg" },
+  { name: "Microsoft", logo: "/logos/microsoft-logo.png" },
+  { name: "Netskope", logo: "/logos/netskope-logo.svg" },
+  { name: "NVIDIA", logo: "/logos/nvidea-logo.png" },
+  { name: "OpenText", logo: "/logos/open-text.webp" },
+  { name: "Palo Alto Networks", logo: "/logos/pal-alto-logo.webp" },
+  { name: "RAH Infotech", logo: "/logos/rah-infotech-logo.png" },
+  { name: "Red Hat", logo: "/logos/red-hat-logo.webp" },
+  { name: "Sophos", logo: "/logos/saphos-logo.svg", invertOnWhite: true },
+  { name: "Schneider Electric", logo: "/logos/schinider-logo.svg" },
+  { name: "Siemens", logo: "/logos/siemens-logo.png" },
+  { name: "Sify Technologies", logo: "/logos/sify-logo.png" },
+  { name: "Thales", logo: "/logos/thals-logo.png" },
+  { name: "Trellix", logo: "/logos/trellix-logo.svg" },
+  { name: "Underscore", logo: "/logos/underscore-logo.jpg" },
+  { name: "Utimaco", logo: "/logos/utimaco-logo-blue.svg" },
+  { name: "Yotta", logo: "/logos/yotta-logo.png" },
+  { name: "Zoom", logo: "/logos/zoom-logo.jpg" },
 ];
 
 export function PartnerLogos() {
   return (
-    <section id="partner-logos" className="relative overflow-hidden border-y border-border py-24">
+    <section id="partner-logos" className="relative overflow-hidden border-y border-border py-20">
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-30" />
+
       <div className="relative mx-auto max-w-6xl px-6">
         <Reveal className="text-center">
           <span className="eyebrow justify-center">Strategic Partners & Sponsors</span>
-          <h2 className="mt-5 font-display text-[clamp(1.8rem,3vw,2.7rem)] font-semibold">
+          <h2 className="mt-4 font-display head-1 font-semibold">
             Trusted by technology <span className="text-gradient">leaders</span>
           </h2>
         </Reveal>
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-y border-border py-8 sm:gap-x-14 sm:gap-y-8 sm:py-12">
-          {partners.map((partner, i) => (
-            <Reveal key={partner.name} delay={(i % 5) * 55}>
-              <div className="partner-mark group relative flex min-w-36 items-center justify-center gap-3 overflow-hidden px-3 py-5 text-muted-foreground transition-colors duration-500 hover:text-foreground">
-                <span className="font-mono text-[9px] text-primary/70">{partner.mark}</span>
-                <span className={`text-lg sm:text-xl ${partner.style}`}>{partner.name}</span>
-              </div>
-            </Reveal>
-          ))}
+
+        {/* Viewport showing up to 30 logos before scroll */}
+        <div className="mt-12 rounded-2xl border border-border/80 bg-card/40 p-3 sm:p-5 shadow-inner backdrop-blur-sm">
+          <div className="max-h-[520px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground/30">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {partners.map((partner, i) => (
+                <Reveal key={partner.name} delay={(i % 6) * 35}>
+                  <div
+                    title={partner.name}
+                    className="flex h-20 w-full items-center justify-center rounded-xl bg-white px-4 py-2 shadow-sm"
+                  >
+                    <img
+                      src={partner.logo}
+                      alt={`${partner.name} logo`}
+                      loading="lazy"
+                      className={`h-auto max-h-11 w-full object-contain ${
+                        partner.invertOnWhite ? "invert" : ""
+                      }`}
+                    />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
+
         <Reveal delay={120} className="mt-8 text-center">
           <p className="text-xs text-muted-foreground">
             Building meaningful connections between enterprise decision-makers and
@@ -402,33 +299,32 @@ export function PartnerLogos() {
   );
 }
 
+
+
 /* ---------------- Team ---------------- */
 
 const team = [
   {
     img: director1,
-    name: "Rajesh Menon",
-    role: "Managing Director",
-    linkedin: "https://www.linkedin.com/company/cxomedia/",
-    bio: "Rajesh has spent over 25 years building enterprise media platforms and C-suite communities across Asia-Pacific. He founded CXO Media with a simple conviction: technology leaders learn fastest from one another, not from vendor decks. Under his leadership the business has grown from a single annual roundtable into a year-round calendar of summits, forums and closed-door briefings spanning eight Indian cities.",
-    focus: ["Vision & Strategy", "CXO Community", "APAC Expansion"],
+    name: "Sanghamitra Mohanty",
+    role: "Co-founder & Director",
+    linkedin: "https://in.linkedin.com/in/mohanty-sanghamitra-apac",
+    bio: "Our vision is to make APAC Media platform a vibrant knowledge sharing platform in which communities from world over can engage, discuss and deliberate on various aspects of creating an efficient knowledge economy through innovation & technology.",
   },
   {
     img: director2,
-    name: "Ananya Iyer",
-    role: "Director — Content & Research",
-    linkedin: "https://www.linkedin.com/company/cxomedia/",
-    bio: "Ananya leads editorial vision, primary research and agenda design across every CXO Media platform. A former enterprise technology journalist, she built the research practice that shapes each summit agenda from real practitioner interviews rather than trend reports. Her team publishes the annual CIO Priorities study and curates the speaker faculty that makes every stage worth the seat.",
-    focus: ["Agenda Design", "Industry Research", "Speaker Faculty"],
+    name: "Gopi Krishna Arora",
+    role: " Co-founder & Director",
+    linkedin: "https://www.linkedin.com/in/gopiarora?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    bio: "Technology and Communications- these are the two most powerful tools to disseminate information on innovation to change the world. We, at APAC Media, are trying to leverage these powerful tools to bring communities together to create an impact for future by creating awareness on theimportance of tech and innovation for various sectors.",
   },
-  {
-    img: director3,
-    name: "Arjun Kapoor",
-    role: "Director — Partnerships & Growth",
-    linkedin: "https://www.linkedin.com/company/cxomedia/",
-    bio: "Arjun drives strategic alliances with global technology brands and India's enterprise innovation ecosystem. He designs partnership programmes that put sponsors in genuine conversation with decision-makers instead of broadcasting at them, and has delivered multi-year engagements for cloud, security and data platform leaders. He also oversees delegate acquisition and regional growth.",
-    focus: ["Brand Alliances", "Sponsorships", "Delegate Growth"],
-  },
+  // {
+  //   img: director3,
+  //   name: "Arjun Kapoor",
+  //   role: "Director — Partnerships & Growth",
+  //   linkedin: "https://www.linkedin.com/company/cxomedia/",
+  //   bio: "Arjun drives strategic alliances with global technology brands and India's enterprise innovation ecosystem. He designs partnership programmes that put sponsors in genuine conversation with decision-makers instead of broadcasting at them, and has delivered multi-year engagements for cloud, security and data platform leaders. He also oversees delegate acquisition and regional growth.",
+  // },
 ];
 
 export function Team() {
@@ -438,7 +334,7 @@ export function Team() {
       <div className="mx-auto max-w-5xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="eyebrow justify-center">Our Team</span>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] font-semibold">
+          <h2 className="mt-5 font-display head-1 font-semibold">
             Led by <span className="text-gradient">seasoned visionaries</span>
           </h2>
           <p className="mt-5 text-muted-foreground">
@@ -467,16 +363,7 @@ export function Team() {
                     {m.role}
                   </p>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{m.bio}</p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {m.focus.map((f) => (
-                      <span
-                        key={f}
-                        className="rounded-full border border-border px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase"
-                      >
-                        {f}
-                      </span>
-                    ))}
-                  </div>
+                 
                   <a
                     href={m.linkedin}
                     target="_blank"
