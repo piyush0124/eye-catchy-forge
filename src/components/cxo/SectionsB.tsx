@@ -25,10 +25,7 @@ export function Audience() {
               The leaders who set the{" "}
               <span className="text-gradient">enterprise technology agenda</span>
             </h2>
-            <p className="mt-5 text-muted-foreground">
-              CXO Media engages senior leaders responsible for enterprise technology
-              strategy, digital transformation, cybersecurity, innovation, infrastructure,
-              data, operations and business growth.
+            <p className="mt-5 text-muted-foreground">CXO Media engages senior leaders responsible for enterprise technology strategy, digital transformation, cybersecurity, innovation, infrastructure, data, operations and business growth.
             </p>
           </Reveal>
           <Reveal delay={120} className="mt-8">
@@ -83,8 +80,8 @@ export function Sectors() {
         <Reveal>
           <span className="eyebrow">Sectoral Focus</span>
           <h2 className="mt-5 font-display  head-1 font-semibold">
-            Where technology is central to{" "}
-            <span className="text-gradient">competitiveness and resilience</span>
+             CXO Media works with enterprises across sectors{" "}
+            <span className="text-gradient">where technology is central to competitiveness, resilience and long-term growth.</span>   
           </h2>
         </Reveal>
       </div>
@@ -141,8 +138,7 @@ export function Partners() {
             <span className="text-gradient">outcome-oriented</span> platforms
           </h2>
           <p className="mt-5 text-muted-foreground">
-            CXO Media helps technology companies build stronger engagement with the right
-            enterprise audiences. Our programs enable partners to:
+            CXO Media helps technology companies build stronger engagement with the right enterprise audiences through targeted, credible and outcome-oriented platforms. <br/><br/> Our programmes enable partners to:
           </p>
           <figure className="mt-8 overflow-hidden rounded-3xl border border-border shadow-card">
             <img
@@ -181,39 +177,32 @@ export function WhyAndCommitment() {
       <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-2">
         <Reveal>
           <article className="glass-panel h-full rounded-3xl p-8">
-            <span className="eyebrow">Why CXO Media</span>
             <h3 className="mt-4 font-display text-2xl font-semibold">
-              Trust, relevance and access to credible expertise
+              Why CXO Media
             </h3>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Enterprise technology decisions require trust, relevance and access to
-              credible expertise. CXO Media creates focused environments where technology
-              leaders can engage with peers, evaluate emerging trends and discover
-              solutions aligned with their business priorities.
+              Enterprise technology decisions require trust, relevance and access to credible expertise. CXO Media creates focused environments where technology leaders can engage with peers, evaluate emerging trends and discover solutions aligned with their business priorities.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Our approach combines the influence of media, the depth of research, the
-              relevance of sector-specific content and the impact of curated executive
-              engagement.
+             Our approach combines the influence of media, the depth of research, the relevance of sector-specific content and the impact of curated executive engagement. This enables us to create meaningful value for both enterprise leaders and technology partners.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              By connecting Tech Enablers with Influencers and Implementers, CXO Media creates a focused ecosystem for knowledge exchange, technology discovery and enterprise engagement.
             </p>
           </article>
         </Reveal>
         <Reveal delay={100}>
           <article className="glass-panel h-full rounded-3xl p-8">
-            <span className="eyebrow">Our Commitment</span>
             <h3 className="mt-4 font-display text-2xl font-semibold">
-              Strengthening the enterprise technology ecosystem
+              Our Commitment
             </h3>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              CXO Media is committed to enabling relevant conversations, actionable
-              insights and strategic collaborations.
+              CXO Media is committed to strengthening the enterprise technology ecosystem by enabling relevant conversations, actionable insights and strategic collaborations.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              We believe technology leadership is central to business growth and
-              resilience. Through our platforms we help the C-suite and IT decision-makers
-              navigate change with clarity, while enabling technology partners to connect
-              with the enterprise audiences that matter most.
+              We believe that technology leadership is central to business growth and resilience. Through our platforms, we help the C-suite, <strong>CXOs, CISOs </strong> and IT decision-makers navigate change with clarity while enabling technology partners to connect with the enterprise audiences that matter most.
             </p>
+           
           </article>
         </Reveal>
       </div>
@@ -227,21 +216,19 @@ export function ContactFooter() {
       <div className="section-pad relative mx-auto max-w-5xl px-6 text-center">
         <div className="bg-gradient-soft pointer-events-none absolute inset-x-10 top-10 h-64 rounded-full blur-3xl" />
         <Reveal>
-          <span className="eyebrow">Get in touch</span>
-          <h2 className="mt-5 font-display text-[clamp(2.1rem,4.6vw,3.6rem)] leading-[1.05] font-semibold">
-            Enterprise Technology. C-suite Insights.{" "}
-            <span className="text-gradient">Strategic Connections.</span>
+          <h2 className="mt-5 head-1  font-semibold">
+            Get in{" "}
+            <span className="text-gradient">touch</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Partner with CXO Media to reach the leaders shaping enterprise technology
-            across Asia-Pacific.
+           For editorial enquiries, PR opportunities, industry insights, expert perspectives, interviews, newsletters and press releases, connect with the CXO Media editorial team at
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <a
               href="mailto:info@cxomedia.in"
               className="bg-gradient-brand rounded-full px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-elegant transition-transform hover:scale-[1.03]"
             >
-              info@cxomedia.in
+              editorial@cxomedia.in
             </a>
             <a
               href="#capabilities"

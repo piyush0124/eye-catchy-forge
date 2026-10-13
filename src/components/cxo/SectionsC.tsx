@@ -17,7 +17,7 @@ import g13 from "@/assets/g13.webp";
 import g14 from "@/assets/g14.webp";
 import director1 from "@/assets/mam-1-1.png";
 import director2 from "@/assets/gopi-sir-1-1.png";
-import director3 from "@/assets/director-3.jpg";
+import director3 from "@/assets/mahantesh.png";
 
 /* ---------------- Conferences ---------------- */
 
@@ -318,13 +318,13 @@ const team = [
     linkedin: "https://www.linkedin.com/in/gopiarora?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     bio: "Technology and Communications- these are the two most powerful tools to disseminate information on innovation to change the world. We, at APAC Media, are trying to leverage these powerful tools to bring communities together to create an impact for future by creating awareness on theimportance of tech and innovation for various sectors.",
   },
-  // {
-  //   img: director3,
-  //   name: "Arjun Kapoor",
-  //   role: "Director — Partnerships & Growth",
-  //   linkedin: "https://www.linkedin.com/company/cxomedia/",
-  //   bio: "Arjun drives strategic alliances with global technology brands and India's enterprise innovation ecosystem. He designs partnership programmes that put sponsors in genuine conversation with decision-makers instead of broadcasting at them, and has delivered multi-year engagements for cloud, security and data platform leaders. He also oversees delegate acquisition and regional growth.",
-  // },
+  {
+    img: director3,
+    name: "Mahantesh Godi",
+    role: "Co-Founder & Director",
+    linkedin: "https://www.linkedin.com/company/cxomedia/",
+    bio: "Mahantesh Godi is a seasoned business leader with over 28 years of experience across Consultative Sales, Marketing,Business Development, and Digital Media. As the Co-Founder and Director of APAC Media &amp; CXO Media, he plays a pivotal role in steering the organization’s transformation from a traditional media company into a comprehensive marketing solutions platform. Known for his strategic vision and consistent ability to exceed growth targets, Mahantesh leads initiatives that drive revenue generation, forge strategic alliances,and build high-impact marketing programs. ",
+  },
 ];
 
 export function Team() {

@@ -59,21 +59,18 @@ export function About() {
             <div className="mt-6 space-y-4 text-muted-foreground">
               <p>
                 <strong className="text-foreground">CXO Media Pvt. Ltd.</strong>, an
-                initiative by APAC Media, is an enterprise-focused media, knowledge and
-                engagement platform serving the C-suite, technology leadership and senior
-                IT decision-makers.
+                initiative by APAC Media, is an enterprise-focused media, knowledge and engagement platform serving CIOs, CTOs, CISOs, Chief Digital Officers, Chief Data Officers, technology leaders, senior IT decision-makers and industry experts.
               </p>
               <p>
-                We enable meaningful connections between enterprise leaders and technology
-                solution providers through high-impact conferences, executive roundtables,
-                leadership forums, research-led content and customised engagement
-                programs.
+                We enable meaningful connections between enterprise leaders and technology solution providers through high-impact conferences, executive roundtables, leadership forums, research-led content and customised engagement programmes. Our platforms facilitate informed conversations around digital transformation, cybersecurity, data, cloud, AI, infrastructure, innovation and business resilience.
               </p>
               <p>
-                Our platforms facilitate informed conversations around digital
-                transformation, cybersecurity, cloud, AI, infrastructure, data, innovation
-                and business resilience.
+                CXO Media brings together CIOs, CTOs, CISOs, Chief Digital Officers, Chief Data Officers, IT Heads, cybersecurity experts and business leaders across industries to exchange insights, explore emerging technologies and build strategic partnerships.
               </p>
+              <p>
+                Our approach brings together Tech Enablers, Influencers and Implementers to create meaningful conversations between technology providers, decision-makers and organisations driving enterprise transformation.
+              </p>
+          
             </div>
           </Reveal>
           <div className="mt-9 grid gap-4 sm:grid-cols-2">
@@ -119,19 +116,14 @@ export function Purpose() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal>
           <span className="eyebrow">Our Purpose</span>
-          <h2 className="mt-6 font-display head-1  font-semibold">
-            To create credible, high-value platforms that help enterprise technology
-            leaders stay{" "}
+          <h2 className="mt-6 font-display head-1  font-semibold">To create credible, high-value platforms that help enterprise technology leaders, CXOs and CISOs, stay{" "}
             <span className="text-gradient">informed, connected and prepared</span> for
             the future.
           </h2>
         </Reveal>
         <Reveal delay={80}>
           <p className="mx-auto mt-7 max-w-2xl text-muted-foreground">
-            Through curated news, market analysis, expert perspectives, research and
-            executive-led discussions, CXO Media delivers relevant intelligence for the
-            C-suite and technology decision-makers navigating a rapidly evolving business
-            environment.
+            Through curated news, market analysis, expert perspectives, research and executive-led discussions, CXO Media delivers relevant intelligence for the C-suite and technology decision-makers navigating a rapidly evolving business environment.
           </p>
         </Reveal>
         <Reveal delay={140}>
@@ -164,12 +156,8 @@ export function Mission() {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="max-w-3xl">
           <span className="eyebrow">Our Mission</span>
-          <h3 className="mt-5 font-display head-1  font-medium  mission">
-            To empower enterprises, technology leaders and solution providers with the
-            insights, access and engagement opportunities required to{" "}
-            <span className="text-gradient">
-              accelerate innovation, strengthen cyber resilience and achieve sustainable
-              business growth
+          <h3 className="mt-5 font-display head-1  font-medium  mission">To empower enterprises, technology leaders and solution providers with the insights, access and engagement opportunities required{" "}
+            <span className="text-gradient">to accelerate innovation, strengthen cyber resilience and achieve sustainable business growth
             </span>
             .
           </h3>
@@ -234,8 +222,7 @@ export function Capabilities() {
             <span className="text-gradient">thought leadership</span>
           </h2>
           <p className="mt-5 text-muted-foreground">
-            Tailored to the objectives of technology companies and industry partners.
-          </p>
+CXO Media offers end-to-end enterprise engagement and thought leadership solutions tailored to the objectives of technology companies and industry partners.          </p>
         </Reveal>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] cap">

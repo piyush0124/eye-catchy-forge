@@ -40,14 +40,12 @@ export function Hero() {
         </span>
 
         <h1 className="mt-6 max-w-4xl font-display where leading-[0.98] font-semibold">
-          Where enterprise leaders meet{" "}
-          <span className="text-gradient">technology innovation</span>.
+          Where Enterprise Leaders Meet{" "}
+          <span className="text-gradient">Technology and Innovation</span>.
         </h1>
 
         <p className="mt-7 max-w-2xl where-p leading-relaxed text-muted-foreground">
-          CXO Media builds high-impact conferences, executive roundtables and leadership
-          forums for the C-suite, technology leadership and senior IT decision-makers
-          across Asia-Pacific.
+          CXO Media builds high-impact conferences, executive roundtables and leadership forums for the C-suite, technology leaders and senior IT decision-makers across Asia Pacific
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
