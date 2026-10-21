@@ -15,6 +15,7 @@ dist-ssr
 .tanstack/**
 .nitro
 *.local
+public/video-1.mp4
 
 # Wrangler / Cloudflare
 .wrangler/
