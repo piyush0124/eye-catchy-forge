@@ -16,6 +16,7 @@ dist-ssr
 .nitro
 *.local
 /public/video-1.mp4
+/src/assets/hero-conference-video-11.mp4 
 
 # Wrangler / Cloudflare
 .wrangler/
