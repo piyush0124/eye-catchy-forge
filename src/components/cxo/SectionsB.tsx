@@ -44,7 +44,7 @@ export function Audience() {
         <ul className="grid gap-3 sm:grid-cols-2">
           {audience.map((a, i) => (
             <Reveal key={a} delay={i * 45}>
-              <li className="flex h-full items-start gap-3 rounded-2xl border border-border bg-card p-5 text-sm transition-colors hover:border-primary/50">
+              <li className="flex h-full items-start gap-3 rounded-2xl border border-border bg-card fx-card p-5 text-sm transition-colors hover:border-primary/50">
                 <span className="bg-gradient-brand mt-1.5 h-2 w-2 shrink-0 rounded-full" />
                 {a}
               </li>
@@ -102,7 +102,7 @@ export function Sectors() {
       <div className="mx-auto mt-12 grid max-w-6xl gap-3 px-6 sm:grid-cols-2 lg:grid-cols-3">
         {sectors.map((s, i) => (
           <Reveal key={s} delay={i * 40}>
-            <div className="flex h-full items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm">
+            <div className="flex h-full items-center gap-3 rounded-2xl border border-border bg-card fx-card px-5 py-4 text-sm">
               <span className="font-mono text-xs text-muted-foreground">
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -154,7 +154,7 @@ export function Partners() {
         <ul className="space-y-3">
           {value.map((v, i) => (
             <Reveal key={v} delay={i * 50}>
-              <li className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 text-sm transition-colors hover:border-primary/50">
+              <li className="flex items-start gap-4 rounded-2xl border border-border bg-card fx-card p-5 text-sm transition-colors hover:border-primary/50">
                 <span className="bg-gradient-brand flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-mono text-[11px] text-primary-foreground">
                   {String(i + 1).padStart(2, "0")}
                 </span>

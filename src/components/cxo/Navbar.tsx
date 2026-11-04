@@ -14,9 +14,28 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const els = links
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is Element => !!el);
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(`#${e.target.id}`);
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled((prev) => {
+      const next = window.scrollY > 24;
+      return prev === next ? prev : next;
+    });
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,8 +44,8 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "glass-panel border-x-0 border-t-0 py-3" : "border-transparent py-5",
+        "fixed inset-x-0 top-0 z-50 transition-[padding,background-color,border-color] duration-300",
+        scrolled ? "glass-panel glass-blur border-x-0 border-t-0 py-3" : "border-transparent py-5",
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6">
@@ -39,7 +58,7 @@ export function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className={cn("nav-link text-sm transition-colors hover:text-foreground", active === l.href ? "is-active text-foreground" : "text-muted-foreground")}
               >
                 {l.label}
               </a>
@@ -66,7 +85,7 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <ul className="glass-panel mx-6 mt-3 space-y-1 rounded-2xl p-4 lg:hidden">
+        <ul className="glass-panel glass-blur mx-6 mt-3 space-y-1 rounded-2xl p-4 lg:hidden">
           {links.map((l) => (
             <li key={l.href}>
               <a

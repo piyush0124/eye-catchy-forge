@@ -1,4 +1,5 @@
-import { CalendarDays, MapPin, Users, Linkedin, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CalendarDays, MapPin, Linkedin, ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 
 import g1 from "@/assets/g1.webp";
@@ -15,9 +16,9 @@ import g11 from "@/assets/g11.webp";
 import g12 from "@/assets/g12.webp";
 import g13 from "@/assets/g13.webp";
 import g14 from "@/assets/g14.webp";
-import director1 from "@/assets/mam-1-1.png";
-import director2 from "@/assets/gopi-sir-1-1.png";
-import director3 from "@/assets/mahantesh.png";
+import director1 from "@/assets/mam-1-1.webp";
+import director2 from "@/assets/gopi-sir-1-1.webp";
+import director3 from "@/assets/mahantesh.webp";
 
 /* ---------------- Conferences ---------------- */
 
@@ -143,34 +144,53 @@ const glimpses = [
   { img: g14, alt: "Rooftop cocktail reception with skyline view" },
 ];
 
-interface MarqueeCardProps {
-  item: (typeof glimpses)[number];
-  index: number;
-}
-
-function MarqueeCard({ item, index }: MarqueeCardProps) {
+function MarqueeCard({ item }: { item: (typeof glimpses)[number] }) {
   return (
-    <figure className="group relative h-56 w-72 shrink-0 overflow-hidden rounded-xl border border-border bg-card sm:h-64 sm:w-80 [transform:translateZ(0)]">
+    <figure className="group relative h-56 w-72 shrink-0 overflow-hidden rounded-xl border border-border bg-card [contain:layout_paint] sm:h-64 sm:w-80">
       <img
         src={item.img}
         alt={item.alt}
-        loading="lazy"
-        decoding="async" /* Browser ko background me image decode karne deta hai */
-        className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+        width={960}
+        height={640}
+        loading="eager"
+        decoding="async"
+        draggable={false}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-70" />
-      <figcaption className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 font-mono text-[11px] uppercase tracking-wider">
-        {/* <span className="truncate text-foreground">{item.label || item.alt}</span> */}
-        {/* <span className="text-muted-foreground">{String(index + 1).padStart(2, "0")}</span> */}
-      </figcaption>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent opacity-70" />
     </figure>
   );
 }
 
+/** True once the element is within `margin` of the viewport; `live` tracks current visibility. */
+function useNearViewport(margin = "600px") {
+  const ref = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+  const [live, setLive] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) setNear(true);
+        setLive(entry.isIntersecting);
+      },
+      { rootMargin: margin },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [margin]);
+  return { ref, near, live };
+}
 
 export function Gallery() {
   const row1 = glimpses.slice(0, Math.ceil(glimpses.length / 2));
   const row2 = glimpses.slice(Math.ceil(glimpses.length / 2));
+  // Photos are only requested when the section is about to scroll into view,
+  // and the marquee only animates while it is on screen.
+  const { ref, near, live } = useNearViewport();
+  const state = live ? "running" : "paused";
 
   return (
     <section
@@ -192,25 +212,34 @@ export function Gallery() {
         </Reveal>
       </div>
 
-      {/* Marquee Container with side fade masks */}
-      <div className="relative mt-12 flex flex-col gap-5 overflow-hidden">
-        {/* Left & Right gradient fades */}
+      {/* Marquee container with side fade masks (fixed height so nothing jumps while photos load) */}
+      <div
+        ref={ref}
+        className="relative mt-12 flex min-h-[29rem] flex-col gap-5 overflow-hidden sm:min-h-[32rem]"
+      >
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background via-background/70 to-transparent sm:w-36" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background via-background/70 to-transparent sm:w-36" />
 
-        {/* Row 1: Leftward scroll */}
-        <div className="flex w-fit animate-marquee-left gap-5 hover:[animation-play-state:paused]">
-          {[...row1, ...row1].map((g, i) => (
-            <MarqueeCard key={`row1-${i}`} item={g} index={i % row1.length} />
-          ))}
-        </div>
-
-        {/* Row 2: Rightward scroll */}
-        <div className="flex w-fit animate-marquee-right gap-5 hover:[animation-play-state:paused]">
-          {[...row2, ...row2].map((g, i) => (
-            <MarqueeCard key={`row2-${i}`} item={g} index={i % row2.length} />
-          ))}
-        </div>
+        {near && (
+          <>
+            <div
+              className="flex w-fit animate-marquee-left gap-5 hover:[animation-play-state:paused]"
+              style={{ animationPlayState: state }}
+            >
+              {[...row1, ...row1].map((g, i) => (
+                <MarqueeCard key={`row1-${i}`} item={g} />
+              ))}
+            </div>
+            <div
+              className="flex w-fit animate-marquee-right gap-5 hover:[animation-play-state:paused]"
+              style={{ animationPlayState: state }}
+            >
+              {[...row2, ...row2].map((g, i) => (
+                <MarqueeCard key={`row2-${i}`} item={g} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
@@ -307,31 +336,99 @@ const team = [
   {
     img: director1,
     name: "Sanghamitra Mohanty",
-    role: "Co-founder & Director",
+    role: "Co-Founder & Director",
     linkedin: "https://in.linkedin.com/in/mohanty-sanghamitra-apac",
     bio: "Our vision is to make APAC Media platform a vibrant knowledge sharing platform in which communities from world over can engage, discuss and deliberate on various aspects of creating an efficient knowledge economy through innovation & technology.",
   },
   {
     img: director2,
     name: "Gopi Krishna Arora",
-    role: " Co-founder & Director",
+    role: "Co-Founder & Director",
     linkedin: "https://www.linkedin.com/in/gopiarora?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
-    bio: "Technology and Communications- these are the two most powerful tools to disseminate information on innovation to change the world. We, at APAC Media, are trying to leverage these powerful tools to bring communities together to create an impact for future by creating awareness on theimportance of tech and innovation for various sectors.",
+    bio: "Technology and Communications - these are the two most powerful tools to disseminate information on innovation to change the world. We, at APAC Media, are trying to leverage these powerful tools to bring communities together to create an impact for future by creating awareness on the importance of tech and innovation for various sectors.",
   },
   {
     img: director3,
     name: "Mahantesh Godi",
     role: "Co-Founder & Director",
     linkedin: "https://www.linkedin.com/company/cxomedia/",
-    bio: "Mahantesh Godi is a seasoned business leader with over 28 years of experience across Consultative Sales, Marketing,Business Development, and Digital Media. As the Co-Founder and Director of APAC Media &amp; CXO Media, he plays a pivotal role in steering the organization’s transformation from a traditional media company into a comprehensive marketing solutions platform. Known for his strategic vision and consistent ability to exceed growth targets, Mahantesh leads initiatives that drive revenue generation, forge strategic alliances,and build high-impact marketing programs. ",
+    bio: "Mahantesh Godi is a seasoned business leader with over 28 years of experience across Consultative Sales, Marketing, Business Development, and Digital Media. As the Co-Founder and Director of APAC Media & CXO Media, he plays a pivotal role in steering the organization’s transformation from a traditional media company into a comprehensive marketing solutions platform. Known for his strategic vision and consistent ability to exceed growth targets, Mahantesh leads initiatives that drive revenue generation, forge strategic alliances, and build high-impact marketing programs.",
   },
 ];
+
+function TeamCard({ member, index }: { member: (typeof team)[number]; index: number }) {
+  const [open, setOpen] = useState(false);
+  const long = member.bio.length > 230;
+
+  return (
+    <Reveal delay={index * 90} className="h-full">
+      <article className="group glass-panel relative flex h-full flex-col overflow-hidden rounded-3xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-elegant">
+        {/* Photo */}
+        <div className="relative aspect-[4/4.4] overflow-hidden">
+          <img
+            src={member.img}
+            alt={`${member.name}, ${member.role} at CXO Media`}
+            loading="lazy"
+            decoding="async"
+            width={720}
+            height={792}
+            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          <span className="bg-gradient-brand absolute inset-x-0 top-0 h-1 opacity-80" />
+
+          <div className="absolute inset-x-6 bottom-5">
+            <h3 className="font-display text-2xl leading-tight font-semibold text-foreground">
+              {member.name}
+            </h3>
+            <p className="text-gradient mt-1.5 font-mono text-[11px] tracking-[0.16em] uppercase">
+              {member.role}
+            </p>
+          </div>
+        </div>
+
+        {/* Bio + action */}
+        <div className="flex flex-1 flex-col p-6 pt-5">
+          <p
+            className={`text-sm leading-relaxed text-muted-foreground ${open ? "" : "line-clamp-5"}`}
+          >
+            {member.bio}
+          </p>
+          {long && (
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              className="mt-2 w-fit text-xs font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {open ? "Show less" : "Read more"}
+            </button>
+          )}
+
+          <div className="mt-auto pt-6">
+            <a
+              href={member.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Connect with ${member.name} on LinkedIn`}
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-border px-5 py-2 text-sm font-medium transition-colors hover:border-primary/60 hover:bg-secondary"
+            >
+              <Linkedin className="h-4 w-4 text-primary" />
+              Connect on LinkedIn
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </div>
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
 export function Team() {
   return (
     <section id="team" className="section-pad relative overflow-hidden">
       <div className="bg-gradient-soft pointer-events-none absolute top-20 -left-32 h-[420px] w-[420px] rounded-full blur-3xl" />
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="eyebrow justify-center">Our Team</span>
           <h2 className="mt-5 font-display head-1 font-semibold">
@@ -343,40 +440,9 @@ export function Team() {
           </p>
         </Reveal>
 
-        <div className="mt-14 space-y-6">
+        <div className="mx-auto mt-14 grid max-w-6xl items-stretch gap-8 md:grid-cols-2 lg:grid-cols-3">
           {team.map((m, i) => (
-            <Reveal key={m.name} delay={i * 80}>
-              <article className="group glass-panel grid gap-7 rounded-3xl p-6 transition-all hover:border-primary/50 hover:shadow-elegant sm:grid-cols-[220px_1fr] sm:p-8">
-                <div className="relative overflow-hidden rounded-2xl border border-border shadow-card">
-                  <img
-                    src={m.img}
-                    alt={`${m.name}, ${m.role} at CXO Media`}
-                    loading="lazy"
-                    width={768}
-                    height={960}
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="font-display text-2xl font-semibold">{m.name}</h3>
-                  <p className="text-gradient mt-1 font-mono text-[11px] tracking-[0.16em] uppercase">
-                    {m.role}
-                  </p>
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{m.bio}</p>
-                 
-                  <a
-                    href={m.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-border px-5 py-2 text-sm font-medium transition-colors hover:border-primary/60 hover:bg-secondary"
-                  >
-                    <Linkedin className="h-4 w-4 text-primary" />
-                    Connect on LinkedIn
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </article>
-            </Reveal>
+            <TeamCard key={m.name} member={m} index={i} />
           ))}
         </div>
       </div>

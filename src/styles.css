@@ -128,6 +128,22 @@
 
   html {
     scroll-behavior: smooth;
+    /* anchors (#team, #glimpses…) land below the fixed navbar instead of under it */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  img,
+  video {
+    /* images never flash at the wrong size while loading */
+    max-inline-size: 100%;
   }
 }
 
@@ -155,9 +171,15 @@
 }
 
 @utility glass-panel {
-  background-color: color-mix(in oklab, var(--surface) 70%, transparent);
-  backdrop-filter: blur(16px);
+  /* No backdrop-filter here: blurring dozens of cards on every scroll frame is what made the page janky.
+     Use .glass-blur only on small, fixed elements such as the navbar. */
+  background-color: color-mix(in oklab, var(--surface) 88%, transparent);
   border: 1px solid var(--color-border);
+}
+
+@utility glass-blur {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 @utility section-pad {
@@ -314,472 +336,120 @@
 }
 
 .animate-marquee-left {
-  animation: marquee-left 35s linear infinite;
-  will-change: transform; /* GPU layer create karta hai */
+  animation: marquee-left 60s linear infinite;
+  will-change: transform; /* one GPU layer per row, not per card */
+  backface-visibility: hidden;
 }
 
 .animate-marquee-right {
-  animation: marquee-right 35s linear infinite;
+  animation: marquee-right 60s linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
 }
+
+@media (max-width: 640px) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation-duration: 45s;
+  }
+}
+
 
 /* ==========================================================
-   LinkedIn-style feed — CXO Media dark theme (plain CSS)
-   Usage: wrap the widget in <div class="linkedin-feed"> ... </div>
-   Add class "light" to that wrapper for a light variant.
+   Presentation polish
    ========================================================== */
 
-.linkedin-feed {
-  /* surfaces */
-  --linkedin-background: #07070d;
-  --linkedin-surface: #0e0e18;
-  --linkedin-link-surface: #14141f;
-  --linkedin-placeholder: #181826;
-  --linkedin-hover: rgba(255, 255, 255, 0.06);
-  /* text */
-  --linkedin-ink: #ffffff;
-  --linkedin-body: rgba(255, 255, 255, 0.86);
-  --linkedin-subtle: #9b9bb4;
-  /* lines */
-  --linkedin-border: rgba(255, 255, 255, 0.09);
-  --linkedin-divider: rgba(255, 255, 255, 0.08);
-  /* brand: indigo -> violet -> magenta, like the "Partner with us" button */
-  --linkedin-grad-from: #4f6bf5;
-  --linkedin-grad-via: #8b3df0;
-  --linkedin-grad-to: #b23ad9;
-  --linkedin-brand: #a98bff;          /* links, hashtags, mentions */
-  --linkedin-brand-hover: #cdbdff;
-  --linkedin-glow: rgba(139, 61, 240, 0.35);
-  --linkedin-shadow: rgba(0, 0, 0, 0.5);
-
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", -apple-system, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-
-  min-height: 100vh;
-  padding: 72px 24px 80px;
-  color: var(--linkedin-ink);
-  font-family: var(--font-body);
-  background:
-    radial-gradient(900px 500px at 88% 100%, rgba(120, 60, 255, 0.20), transparent 60%),
-    radial-gradient(700px 420px at 0% 0%, rgba(60, 90, 255, 0.10), transparent 60%),
-    var(--linkedin-background);
-}
-
-.linkedin-feed.light {
-  --linkedin-background: #f5f5fa;
-  --linkedin-surface: #ffffff;
-  --linkedin-link-surface: #f1f0fa;
-  --linkedin-placeholder: #e7e6f2;
-  --linkedin-hover: rgba(0, 0, 0, 0.05);
-  --linkedin-ink: #12121c;
-  --linkedin-body: rgba(18, 18, 28, 0.88);
-  --linkedin-subtle: #626278;
-  --linkedin-border: rgba(0, 0, 0, 0.12);
-  --linkedin-divider: rgba(0, 0, 0, 0.08);
-  --linkedin-brand: #6d3df0;
-  --linkedin-brand-hover: #4a22b8;
-  --linkedin-glow: rgba(109, 61, 240, 0.22);
-  --linkedin-shadow: rgba(20, 20, 60, 0.12);
-  background: var(--linkedin-background);
-}
-
-.linkedin-feed *,
-.linkedin-feed *::before,
-.linkedin-feed *::after {
-  box-sizing: border-box;
-}
-
-/* ---------- Section header ---------- */
-.section-header {
-  max-width: 1140px;
-  margin: 0 auto 36px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 14px;
-}
-.section-eyebrow {
-  order: -1;
-  flex-basis: 100%;
-  margin: 0 0 2px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--linkedin-subtle);
-}
-.section-header h1,
-.section-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4.2vw, 44px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--linkedin-ink);
-}
-.gradient-text {
-  background: linear-gradient(90deg, var(--linkedin-grad-from), var(--linkedin-grad-via) 55%, var(--linkedin-grad-to));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-.section-header .badge {
-  width: 34px;
-  height: 34px;
-  flex: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--linkedin-grad-from), var(--linkedin-grad-via));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 20px var(--linkedin-glow);
-}
-.section-header .badge svg { width: 18px; height: 18px; fill: #ffffff; }
-
-/* ---------- Grid ---------- */
-.post-grid {
-  max-width: 1140px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-  gap: 20px;
-  align-items: start;
-}
-
-/* ---------- Carousel (optional: use instead of .post-grid) ----------
-   Markup:
-   <div class="feed-carousel">
-     <div class="feed-carousel-viewport">
-       <div class="feed-carousel-track">
-         <div class="feed-carousel-slide"><article class="li-post">…</article></div>
-       </div>
-     </div>
-     <div class="carousel-controls">
-       <button class="carousel-arrow">…</button>
-       <div class="carousel-dots"><button class="carousel-dot-button is-active"><span></span></button></div>
-       <button class="carousel-arrow">…</button>
-     </div>
-   </div>
-   (Sliding + active-dot behaviour needs a little JS or a carousel library.)
-*/
-.feed-carousel { max-width: 1140px; margin: 0 auto; }
-.feed-carousel-viewport { overflow: hidden; }
-.feed-carousel-track { display: flex; margin-left: -20px; transition: transform 0.4s ease; }
-.feed-carousel-slide {
-  flex: 0 0 100%;
-  min-width: 0;
-  padding-left: 20px;
-  display: flex;
-  align-items: flex-start;
-}
-.feed-carousel-slide .li-post { width: 100%; }
-@media (min-width: 700px)  { .feed-carousel-slide { flex-basis: 50%; } }
-@media (min-width: 1050px) { .feed-carousel-slide { flex-basis: 33.333333%; } }
-
-.carousel-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 28px; }
-.carousel-arrow {
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border: 1px solid var(--linkedin-border);
-  border-radius: 50%;
-  background: var(--linkedin-surface);
-  color: var(--linkedin-ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
-}
-.carousel-arrow svg { width: 16px; height: 16px; }
-.carousel-arrow:hover { border-color: var(--linkedin-grad-via); color: var(--linkedin-brand-hover); box-shadow: 0 0 18px var(--linkedin-glow); }
-.carousel-arrow:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
-
-.carousel-dots { display: flex; align-items: center; gap: 3px; }
-.carousel-dot-button {
-  width: 24px;
-  height: 30px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.carousel-dot-button span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
-  transition: background 0.2s, transform 0.2s;
-}
-.linkedin-feed.light .carousel-dot-button span { background: rgba(0, 0, 0, 0.2); }
-.carousel-dot-button.is-active span {
-  background: linear-gradient(135deg, var(--linkedin-grad-from), var(--linkedin-grad-to));
-  transform: scale(1.35);
-}
-
-/* ---------- Post card ---------- */
-.li-post {
-  background: var(--linkedin-surface);
-  border: 1px solid var(--linkedin-border);
-  border-radius: 16px;
-  overflow: hidden;
-  animation: post-reveal 0.5s ease both;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-}
-.li-post:hover {
-  border-color: rgba(139, 61, 240, 0.55);
-  box-shadow: 0 14px 44px var(--linkedin-shadow), 0 0 32px var(--linkedin-glow);
-  transform: translateY(-3px);
-}
-@keyframes post-reveal {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
-}
-
-/* ---------- Header ---------- */
-.post-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 18px 20px 0;
-}
-.avatar-link { flex-shrink: 0; display: block; }
-.avatar,
-.avatar-fallback {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.avatar { object-fit: cover; background: var(--linkedin-placeholder); border: 1px solid var(--linkedin-border); }
-.avatar-fallback { background: linear-gradient(135deg, var(--linkedin-grad-from), var(--linkedin-grad-via)); }
-.avatar-fallback svg { width: 24px; height: 24px; fill: #ffffff; }
-
-.head-meta { min-width: 0; flex: 1; line-height: 1.3; }
-.author {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--linkedin-ink);
-  text-decoration: none;
-}
-.author:hover { color: var(--linkedin-brand-hover); }
-
-.sub {
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--linkedin-subtle);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sub svg {
-  width: 12px;
-  height: 12px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Gradient pill, same look as the site's "Partner with us" button */
-.follow {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 7px 16px;
+/* Eyebrow labels get a brand-gradient lead-in line */
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--linkedin-grad-from), var(--linkedin-grad-via) 60%, var(--linkedin-grad-to));
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-  text-decoration: none;
-  box-shadow: 0 4px 16px var(--linkedin-glow);
-  transition: filter 0.2s, transform 0.2s;
+  background-image: var(--gradient-brand);
 }
-.follow:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.eyebrow.justify-center::before,
+.eyebrow.rounded-full::before { display: none; }
 
-/* ---------- Post text ---------- */
-.post-text {
-  padding: 14px 20px 0;
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--linkedin-body);
-  white-space: pre-line;
-  overflow-wrap: anywhere;
+/* Section headings: slightly tighter, crisper */
+.head-1 { letter-spacing: -0.025em; }
+.text-gradient { background-size: 140% 100%; }
+
+/* Card hover: lift + violet glow */
+.fx-card {
+  transition: transform 350ms cubic-bezier(.2,.7,.2,1), border-color 250ms ease, box-shadow 350ms ease, background-color 250ms ease;
 }
-.post-text.clamped {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.hashtag,
-.mention,
-.ln-link { color: var(--linkedin-brand); font-weight: 600; }
-.ln-link { font-weight: 400; }
-
-.more-btn {
-  display: block;
-  margin: 4px 20px 0 auto;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-size: 13px;
-  color: var(--linkedin-subtle);
-  cursor: pointer;
-}
-.more-btn:hover { color: var(--linkedin-brand-hover); text-decoration: underline; }
-.more-btn[hidden] { display: none; }
-
-/* ---------- Media / link preview ---------- */
-.post-media { margin-top: 14px; }
-.post-media:empty { display: none; }
-
-.media-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-  background: var(--linkedin-placeholder);
+.fx-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--violet-brand) 60%, transparent);
+  box-shadow: var(--shadow-elegant);
+  background-color: color-mix(in oklab, var(--card) 85%, var(--violet-brand) 15%);
 }
 
-.link-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--linkedin-link-surface);
-  border-top: 1px solid var(--linkedin-divider);
+/* Hero entrance + glows */
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-.link-card img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1.91 / 1;
-  object-fit: cover;
-  background: var(--linkedin-placeholder);
-}
-.link-card-body { padding: 12px 20px 14px; }
-.lc-title {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--linkedin-ink);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.lc-host {
-  margin-top: 4px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  color: var(--linkedin-subtle);
-}
-.link-card:hover .lc-title { color: var(--linkedin-brand-hover); }
+.hero-in { animation: hero-in 900ms cubic-bezier(.2,.7,.2,1) both; }
+.hero-in-2 { animation-delay: 120ms; }
+.hero-in-3 { animation-delay: 240ms; }
+.hero-in-4 { animation-delay: 360ms; }
+.hero-in-5 { animation-delay: 480ms; }
 
-/* ---------- Action bar ---------- */
-.post-actions {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 10px;
-  margin-top: 14px;
-  border-top: 1px solid var(--linkedin-divider);
+@keyframes orb-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(40px, -30px, 0) scale(1.08); }
 }
-.action {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 4px;
-  border-radius: 10px;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--linkedin-subtle);
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+.hero-orb {
+  width: 640px; height: 640px; border-radius: 50%;
+  animation: orb-drift 18s ease-in-out infinite;
+  will-change: transform;
 }
-.action svg {
-  width: 19px;
-  height: 19px;
-  flex: none;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.hero-orb-a {
+  top: -160px; right: -120px;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--violet-brand) 38%, transparent), transparent);
 }
-.action:hover { background: var(--linkedin-hover); color: var(--linkedin-ink); }
-@media (max-width: 420px) { .action span { display: none; } }
+.hero-orb-b {
+  bottom: -220px; left: -160px; animation-delay: -9s;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--magenta-brand) 28%, transparent), transparent);
+}
 
-/* ---------- Loading skeleton ---------- */
-.skeleton-card {
-  background: var(--linkedin-surface);
-  border: 1px solid var(--linkedin-border);
-  border-radius: 16px;
-  padding: 18px 20px 20px;
+/* Scroll cue */
+.scroll-cue {
+  width: 26px; height: 42px; border: 2px solid color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-radius: 999px; display: block;
 }
-.sk {
-  background: linear-gradient(90deg, var(--linkedin-placeholder) 25%, var(--linkedin-link-surface) 50%, var(--linkedin-placeholder) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 6px;
+.scroll-cue span {
+  display: block; width: 4px; height: 8px; margin: 7px auto 0; border-radius: 4px;
+  background: var(--foreground);
+  animation: cue 1.8s ease-in-out infinite;
 }
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@keyframes cue {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { opacity: 0; }
 }
-.skeleton-head { display: flex; gap: 12px; margin-bottom: 16px; }
-.skeleton-avatar { width: 48px; height: 48px; flex: none; border-radius: 12px; }
-.skeleton-meta { flex: 1; }
-.skeleton-name { height: 12px; width: 45%; margin: 4px 0 8px; }
-.skeleton-sub { height: 10px; width: 30%; }
-.skeleton-line { height: 12px; margin-bottom: 8px; }
-.skeleton-line.short { width: 85%; }
-.skeleton-line.shorter { width: 60%; }
 
-/* ---------- States ---------- */
-.error-state {
-  grid-column: 1 / -1;
-  padding: 30px 0;
-  text-align: center;
-  font-size: 14px;
-  color: var(--linkedin-subtle);
+/* Navbar: animated underline + active state */
+.nav-link { position: relative; padding-block: 4px; }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%;
+  background-image: var(--gradient-brand); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left; transition: transform 300ms ease;
 }
-.refresh-note {
-  max-width: 1140px;
-  margin: 20px auto 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--linkedin-subtle);
-  text-align: right;
+.nav-link:hover::after, .nav-link.is-active::after { transform: scaleX(1); }
+
+/* Footer top accent */
+footer#contact { border-top: 1px solid var(--border); position: relative; }
+footer#contact::before {
+  content: ""; position: absolute; inset-inline: 0; top: 0; height: 2px;
+  background-image: var(--gradient-brand); opacity: .9;
 }
+
+/* Nicer scrollbar + focus ring */
+html { scrollbar-color: color-mix(in oklab, var(--violet-brand) 60%, transparent) var(--background); scrollbar-width: thin; }
+:focus-visible { outline: 2px solid var(--violet-brand); outline-offset: 3px; border-radius: 6px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .li-post, .sk { animation: none; }
-  .li-post, .feed-carousel-track, .carousel-dot-button span { transition: none; }
-  .li-post:hover, .follow:hover { transform: none; }
+  .hero-in, .hero-orb, .scroll-cue span { animation: none !important; }
 }

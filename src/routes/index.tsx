@@ -14,7 +14,7 @@ import {
   ContactFooter,
 } from "@/components/cxo/SectionsB";
 import {  Gallery, PartnerLogos, Team } from "@/components/cxo/SectionsC";
-import { LinkedInPosts } from "@/components/cxo/LinkedInPosts";
+import { ScrollProgress } from "@/components/cxo/ScrollProgress";
 
 const title = "CXO Media | Enterprise Technology Events for the C-Suite";
 const description =
@@ -37,6 +37,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main>
+      <ScrollProgress />
       <Navbar />
       <Hero />
       <About />
@@ -53,7 +54,6 @@ function Index() {
       <Partners />
       <PartnerLogos />
       <Team />
-      <LinkedInPosts />
       <WhyAndCommitment />
       <ContactFooter />
     </main>

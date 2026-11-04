@@ -1,5 +1,6 @@
-import aboutImg from "@/assets/about-2.png";
-import panelImg from "/video-1.mp4";
+import aboutImg from "@/assets/about-2.webp";
+import { LazyVideo } from "./LazyVideo";
+import panelImg from "@/assets/video-1.mp4";
 import dinnerImg from "@/assets/event-dinner.jpg";
 import networkingImg from "@/assets/event-networking.jpg";
 import speakerImg from "@/assets/der.jpg";
@@ -76,7 +77,7 @@ export function About() {
           <div className="mt-9 grid gap-4 sm:grid-cols-2">
             {cards.map((c, i) => (
               <Reveal key={c.title} delay={100 + i * 70}>
-                <div className="h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50">
+                <div className="h-full rounded-2xl border border-border bg-card fx-card p-5 transition-colors hover:border-primary/50">
                   <span className="bg-gradient-brand mb-3 block h-1 w-8 rounded-full" />
                   <h3 className="font-display text-base font-semibold">{c.title}</h3>
                   <p className="mt-1.5 text-sm text-muted-foreground">{c.desc}</p>
@@ -167,7 +168,7 @@ export function Mission() {
           <ul className="space-y-4">
             {enablers.map((e, i) => (
               <Reveal key={e} delay={i * 80}>
-                <li className="rounded-2xl border border-border bg-card px-6 py-5 font-display text-lg">
+                <li className="rounded-2xl border border-border bg-card fx-card px-6 py-5 font-display text-lg">
                   {e}
                 </li>
               </Reveal>
@@ -244,13 +245,10 @@ CXO Media offers end-to-end enterprise engagement and thought leadership solutio
             {gallery.map((g, i) => (
               <Reveal key={g.alt} delay={i * 90}>
                 <figure className="relative overflow-hidden rounded-3xl border border-border shadow-card">
-                  <video
+                  <LazyVideo
                     src={g.src}
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                    preload="none"
                     controls={false}
                   />
                 </figure>
