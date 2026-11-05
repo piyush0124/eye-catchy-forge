@@ -1,13 +1,15 @@
+
 import heroImg from "@/assets/hero-conference.jpg";
 import { LazyVideo } from "./LazyVideo";
 import { CountUp } from "./CountUp";
-import heroVideo from "@/assets/hero-conference-video-112.mp4";
+
+// Load video directly from the public folder
+const heroVideo = "/video-1.mp4";
 
 const stats = [
   { value: <CountUp to={10} suffix="+" />, label: "Engagement formats" },
   { value: <CountUp to={11} />, label: "Sectors covered" },
   { value: "C-Suite", label: "Audience focus" },
-  // { value: "APAC", label: "Media initiative" },
 ];
 
 export function Hero() {
@@ -16,25 +18,31 @@ export function Hero() {
       <LazyVideo
         className="absolute inset-0 -z-20 h-full w-full object-cover motion-reduce:hidden"
         autoPlay
+        muted
+        loop
+        playsInline
         preload="auto"
         poster={heroImg}
         disablePictureInPicture
         aria-hidden="true"
       >
-        <source src={heroVideo} type="video/mp4"/>
+        <source src={heroVideo} type="video/mp4" />
       </LazyVideo>
-      {/* <img
-        src={heroImg}
-        alt="Keynote speaker on stage at a CXO Media enterprise technology conference"
-        width={1920}
-        height={1088}
-        className="absolute inset-0 -z-20 hidden h-full w-full object-cover motion-reduce:block"
-      /> */}
+
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,oklch(0.14_0.03_285/0.96),oklch(0.14_0.03_285/0.72)_55%,oklch(0.14_0.03_285/0.35))]" />
+
       <div className="grid-lines absolute inset-0 -z-10 opacity-40" />
-      {/* soft brand glows (plain gradients, so they stay cheap to paint) */}
-      <div className="hero-orb hero-orb-a pointer-events-none absolute -z-10" aria-hidden="true" />
-      <div className="hero-orb hero-orb-b pointer-events-none absolute -z-10" aria-hidden="true" />
+
+      <div
+        className="hero-orb hero-orb-a pointer-events-none absolute -z-10"
+        aria-hidden="true"
+      />
+
+      <div
+        className="hero-orb hero-orb-b pointer-events-none absolute -z-10"
+        aria-hidden="true"
+      />
+
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-background to-transparent" />
 
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pt-32 pb-16">
@@ -45,11 +53,15 @@ export function Hero() {
 
         <h1 className="hero-in hero-in-2 mt-6 max-w-4xl font-display where leading-[0.98] font-semibold">
           Where Enterprise Leaders Meet{" "}
-          <span className="text-gradient">Technology and Innovation</span>.
+          <span className="text-gradient">
+            Technology and Innovation
+          </span>.
         </h1>
 
         <p className="hero-in hero-in-3 mt-7 max-w-2xl where-p leading-relaxed text-muted-foreground">
-          CXO Media builds high-impact conferences, executive roundtables and leadership forums for the C-suite, technology leaders and senior IT decision-makers across Asia Pacific
+          CXO Media builds high-impact conferences, executive roundtables and
+          leadership forums for the C-suite, technology leaders and senior IT
+          decision-makers across Asia Pacific
         </p>
 
         <div className="hero-in hero-in-4 mt-10 flex flex-wrap items-center gap-4">
@@ -59,6 +71,7 @@ export function Hero() {
           >
             Explore our platforms
           </a>
+
           <a
             href="#contact"
             className="rounded-full border border-border px-7 py-3.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
@@ -69,7 +82,10 @@ export function Hero() {
 
         <dl className="hero-in hero-in-5 mt-16 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-3">
           {stats.map((s) => (
-            <div key={s.label} className="glass-panel glass-blur border-0 px-6 py-6">
+            <div
+              key={s.label}
+              className="glass-panel glass-blur border-0 px-6 py-6"
+            >
               <dt className="font-display text-3xl font-semibold text-gradient">
                 {s.value}
               </dt>
@@ -81,7 +97,11 @@ export function Hero() {
         </dl>
       </div>
 
-      <a href="#about" aria-label="Scroll to content" className="scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:block">
+      <a
+        href="#about"
+        aria-label="Scroll to content"
+        className="scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:block"
+      >
         <span />
       </a>
     </section>
